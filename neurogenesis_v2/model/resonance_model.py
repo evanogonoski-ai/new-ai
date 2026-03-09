@@ -23,6 +23,9 @@ class ResonanceModel(nn.Module):
         self.embedding = TokenEmbedding(config.vocab_size, config.d_model)
         self.rope = RotaryPositionalEmbedding(config.d_head, config.max_seq_len)
 
+        # V3: noise injection scale
+        self.noise_scale = config.noise_scale
+
         # The single shared resonance block
         self.block = ResonanceBlock(
             d_model=config.d_model,
@@ -31,6 +34,9 @@ class ResonanceModel(nn.Module):
             d_ffn_max=config.d_ffn_max,
             d_ffn_start=config.d_ffn_start,
             momentum_beta_init=config.momentum_beta_init,
+            gate_floor=config.gate_floor,
+            gate_min=config.gate_min,
+            gate_max=config.gate_max,
         )
 
         # Final layer norm
@@ -70,6 +76,12 @@ class ResonanceModel(nn.Module):
 
         # Embed
         state = self.embedding(input_ids)  # (B, S, d_model)
+
+        # V3: Noise injection during training (analogous to varied replay)
+        if self.training and self.noise_scale > 0.0:
+            noise = torch.randn_like(state) * self.noise_scale
+            state = state + noise
+
         prev_state = torch.zeros_like(state)
 
         all_states = [state]

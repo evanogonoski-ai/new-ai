@@ -22,6 +22,13 @@ class ResonanceConfig:
     # Entropy gating
     gate_sparsity_lambda: float = 0.01
 
+    # V3 biological constraints
+    gate_floor: float = 0.0          # minimum gate value (biological baseline firing)
+    gate_min: float = 0.0            # gate range compression lower bound (lateral inhibition)
+    gate_max: float = 1.0            # gate range compression upper bound
+    gate_diversity_lambda: float = 0.0  # homeostatic diversity regularization strength
+    noise_scale: float = 0.0         # embedding noise injection (varied replay)
+
     # Neuronal mitosis
     mitosis_enabled: bool = False
     mitosis_check_interval: int = 1000

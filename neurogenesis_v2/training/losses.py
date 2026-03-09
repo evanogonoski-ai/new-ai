@@ -17,6 +17,24 @@ def ponder_cost_loss(ponder_cost: torch.Tensor, lambda_p: float = 0.01) -> torch
     return lambda_p * ponder_cost
 
 
+def gate_diversity_loss(gate_values: torch.Tensor, lambda_div: float = 0.1) -> torch.Tensor:
+    """
+    Homeostatic diversity regularization.
+    Penalizes LOW variance of gate values across the batch,
+    encouraging input-dependent (adaptive) gating patterns.
+
+    Args:
+        gate_values: (batch, n_heads) gate values from the last iteration
+        lambda_div: regularization strength
+    Returns:
+        Negative variance penalty (minimize this to maximize variance)
+    """
+    # Per-head variance across batch dimension
+    gate_var_per_head = gate_values.var(dim=0)  # (n_heads,)
+    # Penalize low variance: loss = -lambda * mean_variance
+    return -lambda_div * gate_var_per_head.mean()
+
+
 def multitimescale_loss(output: dict, targets: torch.Tensor,
                         surface_weight: float = 0.3,
                         semantic_weight: float = 0.1) -> torch.Tensor:

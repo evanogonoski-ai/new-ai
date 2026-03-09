@@ -26,11 +26,16 @@ class ResonanceBlock(nn.Module):
 
     def __init__(self, d_model: int, n_heads: int, d_head: int,
                  d_ffn_max: int, d_ffn_start: int,
-                 momentum_beta_init: float = 0.1):
+                 momentum_beta_init: float = 0.1,
+                 gate_floor: float = 0.0, gate_min: float = 0.0,
+                 gate_max: float = 1.0):
         super().__init__()
 
         self.norm1 = nn.LayerNorm(d_model)
-        self.attention = EntropyGatedAttention(d_model, n_heads, d_head)
+        self.attention = EntropyGatedAttention(
+            d_model, n_heads, d_head,
+            gate_floor=gate_floor, gate_min=gate_min, gate_max=gate_max
+        )
         self.residual1 = MomentumResidual(momentum_beta_init)
 
         self.norm2 = nn.LayerNorm(d_model)

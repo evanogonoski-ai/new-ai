@@ -11,11 +11,15 @@ class EntropyGatedAttention(nn.Module):
     (high entropy) are suppressed. Zero additional parameters.
     """
 
-    def __init__(self, d_model: int, n_heads: int, d_head: int):
+    def __init__(self, d_model: int, n_heads: int, d_head: int,
+                 gate_floor: float = 0.0, gate_min: float = 0.0, gate_max: float = 1.0):
         super().__init__()
         self.n_heads = n_heads
         self.d_head = d_head
         self.d_model = d_model
+        self.gate_floor = gate_floor
+        self.gate_min = gate_min
+        self.gate_max = gate_max
 
         self.W_q = nn.Linear(d_model, n_heads * d_head, bias=False)
         self.W_k = nn.Linear(d_model, n_heads * d_head, bias=False)
@@ -57,7 +61,17 @@ class EntropyGatedAttention(nn.Module):
         normalized_entropy = entropy / max_entropy  # (B, H) in ~[0, 1]
 
         # Gate: focused (low entropy) → high gate, diffuse → low gate
-        gates = 1.0 - normalized_entropy  # (B, H)
+        raw_gates = 1.0 - normalized_entropy  # (B, H)
+
+        # V3: Apply range compression (lateral inhibition)
+        if self.gate_min > 0.0 or self.gate_max < 1.0:
+            gates = self.gate_min + (self.gate_max - self.gate_min) * raw_gates
+        else:
+            gates = raw_gates
+
+        # V3: Apply gate floor (biological baseline firing)
+        if self.gate_floor > 0.0:
+            gates = torch.clamp(gates, min=self.gate_floor)
 
         # Apply attention
         head_output = torch.matmul(attn_weights, V)  # (B, H, S, d_head)
