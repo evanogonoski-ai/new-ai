@@ -6,3 +6,4 @@ Baseline (ref)         |      1.13 |        1.65 |   +0.52 |        N/A |     Au
 V2 Resonance (ref)     |      1.01 |        1.72 |   +0.71 |     0.0014 |     Austen 1.27 |      Plato 1.74
 V3-B_floor0.1          |      1.06 |        1.62 |   +0.56 |   0.003461 |     Austen 1.25 |      Plato 1.66
 V3-B_floor0.05         |      1.06 |        1.62 |   +0.56 |   0.000281 |     Austen 1.25 |      Plato 1.68
+V3-B_floor0.15         |      1.06 |        1.64 |   +0.58 |   0.002562 |     Austen 1.25 |      Plato 1.70
