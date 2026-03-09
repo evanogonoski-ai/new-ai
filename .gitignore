@@ -4,13 +4,8 @@ checkpoints_v2/
 checkpoints_baseline/
 checkpoints_v2.1/
 
-# Data (large files)
-data/*.jsonl
-corpus/raw/
-
-# Tokenizer binaries
-tokenizer/*.json
-data/*.json
+# Large binary files
+data/*.pt
 
 # Python
 __pycache__/
