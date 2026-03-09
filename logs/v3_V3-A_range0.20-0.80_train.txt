@@ -1,0 +1,7 @@
+Resonance model: 1,386,370 total, 1,254,786 active params
+V3 config: gate_floor=0.0, gate_min=0.2, gate_max=0.8, diversity_lambda=0.0, noise_scale=0.0
+
+============================================================
+V3 RESONANCE TRAINING [V3-A_range0.20-0.80]: 9000 steps
+Training samples: 49,877 (holdout authors excluded)
+============================================================
