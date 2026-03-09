@@ -1,0 +1,52 @@
+======================================================================
+GENERATION COMPARISON — Phase 1 vs Phase 2
+Settings: max_tokens=100, temp=0.8, top_k=50
+======================================================================
+
+======================================================================
+  Phase 1 (Single-Pass) (max_iterations=1)
+======================================================================
+
+  Prompt: "Once upon a time"
+  Output: Once upon a timeLong Long Ġago Ġago Ġago Ġago , Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġsad ĠGrace Ġhelped Ġthrough Ġthrough Ġthrough Ġthrough Ġit Ġit Ġit Ġit Ġit Ġit Ġup Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġbrought Ġbrought Ġbrought Ġbrought Ġit Ġit Ġit Ġit Ġit Ġup Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand
+  ——————————————————————————————————————————————————
+
+  Prompt: "The little cat"
+  Output: The little catOnce Ġupon Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġsilver Ġbook Ġblanket Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġneed . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  ——————————————————————————————————————————————————
+
+  Prompt: "A happy girl"
+  Output: A happy girlOnce Ġtime , , , , , , , , , , Ġas Ġas Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġfelt Ġfelt Ġgrateful . . . . . . . . . . . ĠIt ĠIt Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe
+  ——————————————————————————————————————————————————
+
+  Prompt: "In the name of God"
+  Output: In the name of GodAt Ġdawn , Ġthe Ġthe Ġthe Ġorchard . ĠJames Ġpointed Ġto Ġthe Ġdesert . ĠTogether Ġthey Ġthey Ġthey Ġthey Ġjumped Ġfar Ġfar Ġand Ġseemed Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto
+  ——————————————————————————————————————————————————
+
+  Prompt: "The brave warrior discovered"
+  Output: The brave warrior discoveredThere Ġobser Ġobser Ġobser range range range range range range range range ul ul rid arl alley alley thy ses ses range range range range range range range ws Ġof ĠIsrael . ĠGod ?" ĠIt Ġis Ġthe Ġtruth . ĠEven Ġif Ġyou Ġhave Ġgiven Ġyou .
+  ——————————————————————————————————————————————————
+
+======================================================================
+  Phase 2 (Recurrence) (max_iterations=8)
+======================================================================
+
+  Prompt: "Once upon a time"
+  Output: Once upon a timeUnder Ġthe ĠOur ĠOur Ġbasket Ġbears Ġstories Ġof Ġjustice . ĠIvy Ġappeared Ġsang Ġflew ĠOne Ġday Ġthey Ġfound Ġthe Ġlake . ĠThey Ġshared Ġfound Ġa Ġa Ġa Ġa Ġgreen . . ĠIn Ġthe Ġthe Ġthe Ġbest Ġday . . . . . ĠZahra Ġfelt Ġpeaceful .
+  ——————————————————————————————————————————————————
+
+  Prompt: "The little cat"
+  Output: The little catĠago Ġago Ġknew Ġlook Ġheld Ġheld Ġheld Ġheld Ġit Ġappeared Ġand Ġlaughed Ġwith Ġcaring Ġkeep Ġkeep Ġkeep Ġappeared Ġand Ġcaring Ġcaring Ġcaring Ġcaring Ġfor Ġits Ġfind Ġit . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  ——————————————————————————————————————————————————
+
+  Prompt: "A happy girl"
+  Output: A happy girlĠquiet Ġjoy Ġjoy Ġwith ĠSome Ġcrown Ġcrown Ġwith Ġhim Ġin Ġthe Ġthe Ġsummit . ĠThe Ġpeople , Ġa Ġwhite Ġbread . . ĠThose Ġwith Ġeverything . ĠIt Ġis Ġcourage ?
+  ——————————————————————————————————————————————————
+
+  Prompt: "In the name of God"
+  Output: In the name of GodĠcollect Ġpurple Ġstars . ĠIn Ġthe Ġcats Ġpearls Ġthe Ġlittle Ġmost Ġof Ġwisdom . ĠGod Ġis Ġgenerosity Ġon Ġlove . ĠThe Ġbirds Ġof Ġeverything . ĠGod Ġis Ġhumility Ġfrom Ġwhich Ġof Ġwhat Ġof Ġeverything Ġin Ġin Ġeverything . ĠThis Ġis Ġmercy Ġin Ġeverything . ĠIn Ġthe Ġheavens Ġwanted Ġto Ġto Ġthe Ġsummit . Ġwhich Ġis Ġpatience ? Ġpatience ĠIn Ġthe Ġmercy . ĠFinn Ġevery Ġday . ĠYusuf Ġis Ġcourage Ġfrom Ġwatching Ġthe Ġharbor ĠLuke
+  ——————————————————————————————————————————————————
+
+  Prompt: "The brave warrior discovered"
+  Output: The brave warrior discoveredĠsky Ġwith Ġcaring Ġcaring Ġago Ġago Ġago Ġlong Ġago Ġago Ġago Ġago Ġcarried Ġday , Ġa Ġdeer Ġarrived Ġat Ġthe Ġforest Ġone Ġmorning . - those Ġwho Ġbelieved Ġin Ġwhat Ġis Ġfaith Ġin Ġneed Ġneed Ġneed Ġneed Ġneed Ġneed ĠThat 's Ġcompanions Ġon Ġthis Ġfor Ġfor Ġit Ġis Ġfaith Ġin Ġfrom Ġwatching Ġthe Ġdesert ĠGrace 's Ġjourney .
+  ——————————————————————————————————————————————————

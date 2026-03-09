@@ -1,0 +1,32 @@
+# Checkpoints (large binary files)
+checkpoints/
+checkpoints_v2/
+checkpoints_baseline/
+checkpoints_v2.1/
+
+# Data (large files)
+data/*.jsonl
+corpus/raw/
+
+# Tokenizer binaries
+tokenizer/*.json
+data/*.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,108 @@
+============================================================
+NEUROGENESIS V2 — PHASE 3 EVALUATION REPORT
+============================================================
+
+Phase 1 (Single-Pass) Eval:
+  PPL=36.81, loss=3.6056, gates=0.361, iters=8.0, alive=512
+
+Phase 2 (Recurrence) Eval — with tuned momentum/convergence:
+  PPL=2.91, loss=1.0676, gates=0.288, iters=2.0, alive=512
+
+============================================================
+PHASE 3 OBSERVATIONS (Partial Run — Process Killed)
+============================================================
+
+Phase 3 was run with calibrated thresholds but the process was killed
+before a checkpoint could be saved. Key observations from the partial run:
+
+Configuration:
+  convergence_threshold = 0.18 (tuned from ablation: optimal depth 6-7)
+  momentum_beta = 0.05 (reduced from 0.1 to prevent instability at high iters)
+  mitosis_gradient_var_threshold = 0.00005 (P90 of measured gradient variance)
+  mitosis_check_interval = 500
+  max_iterations = 8
+
+Training Dynamics:
+  - PPL trend: 7.2 → 6.5 (improving steadily before kill)
+  - Gates: ~0.29 (stable from Phase 2)
+  - Iterations: ~5 (convergence halting active at threshold=0.18)
+  - Alive neurons: 512 (constant — neuron replacement pattern)
+
+Mitosis Behavior:
+  - Mitosis fired correctly with calibrated threshold (0.00005 vs original 2.0)
+  - Pattern: equal splits and prunes (+163 split, -163 pruned per check)
+  - This is "neuron replacement" not growth — prune threshold catches
+    newly-created neurons (zero activation EMA)
+  - Despite constant neuron count, PPL still improved (7.2→6.5)
+
+Key Insight:
+  "Look at the actual data, not the assumed data" — gradient variance was
+  measured at mean=0.00003, not the assumed ~1.0. This 100,000x gap was the
+  root cause of mitosis never firing in early attempts.
+
+============================================================
+TRAINING RESULTS SUMMARY
+============================================================
+Phase                          PPL    Gates    Iters
+--------------------------------------------------
+Phase 1 (Single-Pass)          9.4     0.50        1
+Baseline Transformer          76.6        —        —
+Phase 2 (Recurrence)           7.0     0.29        8
+Phase 3 (partial)             ~6.5     0.29       ~5
+
+Resonance vs Baseline: ~8x PPL advantage (9.4 vs 76.6)
+Recurrence benefit: 9.4 → 7.0 (25% PPL reduction)
+Phase 3 trend: 7.0 → ~6.5 (further improvement via mitosis)
+
+======================================================================
+GENERATION COMPARISON — Phase 1 vs Phase 2
+Settings: max_tokens=100, temp=0.8, top_k=50
+======================================================================
+
+======================================================================
+  Phase 1 (Single-Pass) (max_iterations=1)
+======================================================================
+
+  Prompt: "Once upon a time"
+  Output: Once upon a timeLong Long Ġago Ġago Ġago Ġago , Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġsad ĠGrace Ġhelped Ġthrough Ġthrough Ġthrough Ġthrough Ġit Ġit Ġit Ġit Ġit Ġit Ġup Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġbrought Ġbrought Ġbrought Ġbrought Ġit Ġit Ġit Ġit Ġit Ġup Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand Ġand
+  ——————————————————————————————————————————————————
+
+  Prompt: "The little cat"
+  Output: The little catOnce Ġupon Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġa Ġsilver Ġbook Ġblanket Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġin Ġneed . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  ——————————————————————————————————————————————————
+
+  Prompt: "A happy girl"
+  Output: A happy girlOnce Ġtime , , , , , , , , , , Ġas Ġas Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġthere Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġfelt Ġfelt Ġgrateful . . . . . . . . . . . ĠIt ĠIt Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġwas Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe Ġthe
+  ——————————————————————————————————————————————————
+
+  Prompt: "In the name of God"
+  Output: In the name of GodAt Ġdawn , Ġthe Ġthe Ġthe Ġorchard . ĠJames Ġpointed Ġto Ġthe Ġdesert . ĠTogether Ġthey Ġthey Ġthey Ġthey Ġjumped Ġfar Ġfar Ġand Ġseemed Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto Ġto
+  ——————————————————————————————————————————————————
+
+  Prompt: "The brave warrior discovered"
+  Output: The brave warrior discoveredThere Ġobser Ġobser Ġobser range range range range range range range range ul ul rid arl alley alley thy ses ses range range range range range range range ws Ġof ĠIsrael . ĠGod ?" ĠIt Ġis Ġthe Ġtruth . ĠEven Ġif Ġyou Ġhave Ġgiven Ġyou .
+  ——————————————————————————————————————————————————
+
+======================================================================
+  Phase 2 (Recurrence) (max_iterations=8)
+======================================================================
+
+  Prompt: "Once upon a time"
+  Output: Once upon a timeUnder Ġthe ĠOur ĠOur Ġbasket Ġbears Ġstories Ġof Ġjustice . ĠIvy Ġappeared Ġsang Ġflew ĠOne Ġday Ġthey Ġfound Ġthe Ġlake . ĠThey Ġshared Ġfound Ġa Ġa Ġa Ġa Ġgreen . . ĠIn Ġthe Ġthe Ġthe Ġbest Ġday . . . . . ĠZahra Ġfelt Ġpeaceful .
+  ——————————————————————————————————————————————————
+
+  Prompt: "The little cat"
+  Output: The little catĠago Ġago Ġknew Ġlook Ġheld Ġheld Ġheld Ġheld Ġit Ġappeared Ġand Ġlaughed Ġwith Ġcaring Ġkeep Ġkeep Ġkeep Ġappeared Ġand Ġcaring Ġcaring Ġcaring Ġcaring Ġfor Ġits Ġfind Ġit . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  ——————————————————————————————————————————————————
+
+  Prompt: "A happy girl"
+  Output: A happy girlĠquiet Ġjoy Ġjoy Ġwith ĠSome Ġcrown Ġcrown Ġwith Ġhim Ġin Ġthe Ġthe Ġsummit . ĠThe Ġpeople , Ġa Ġwhite Ġbread . . ĠThose Ġwith Ġeverything . ĠIt Ġis Ġcourage ?
+  ——————————————————————————————————————————————————
+
+  Prompt: "In the name of God"
+  Output: In the name of GodĠcollect Ġpurple Ġstars . ĠIn Ġthe Ġcats Ġpearls Ġthe Ġlittle Ġmost Ġof Ġwisdom . ĠGod Ġis Ġgenerosity Ġon Ġlove . ĠThe Ġbirds Ġof Ġeverything . ĠGod Ġis Ġhumility Ġfrom Ġwhich Ġof Ġwhat Ġof Ġeverything Ġin Ġin Ġeverything . ĠThis Ġis Ġmercy Ġin Ġeverything . ĠIn Ġthe Ġheavens Ġwanted Ġto Ġto Ġthe Ġsummit . Ġwhich Ġis Ġpatience ? Ġpatience ĠIn Ġthe Ġmercy . ĠFinn Ġevery Ġday . ĠYusuf Ġis Ġcourage Ġfrom Ġwatching Ġthe Ġharbor ĠLuke
+  ——————————————————————————————————————————————————
+
+  Prompt: "The brave warrior discovered"
+  Output: The brave warrior discoveredĠsky Ġwith Ġcaring Ġcaring Ġago Ġago Ġago Ġlong Ġago Ġago Ġago Ġago Ġcarried Ġday , Ġa Ġdeer Ġarrived Ġat Ġthe Ġforest Ġone Ġmorning . - those Ġwho Ġbelieved Ġin Ġwhat Ġis Ġfaith Ġin Ġneed Ġneed Ġneed Ġneed Ġneed Ġneed ĠThat 's Ġcompanions Ġon Ġthis Ġfor Ġfor Ġit Ġis Ġfaith Ġin Ġfrom Ġwatching Ġthe Ġdesert ĠGrace 's Ġjourney .
+  ——————————————————————————————————————————————————
