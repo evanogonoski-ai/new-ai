@@ -1,0 +1,54 @@
+======================================================================
+V2.2 GENERALIZATION EXPERIMENT REPORT
+Author-Holdout Test: Plato, Austen, Darwin
+======================================================================
+
+======================================================================
+SECTION 1: TRAINING DATA PPL (sanity check — expect ~1.1 for both)
+======================================================================
+  Resonance train PPL:  1.01 (loss=0.0092)
+  Baseline train PPL:   1.13 (loss=0.1212)
+  Loss ratio (base/res): 13.18x
+
+======================================================================
+SECTION 2: HOLDOUT PPL (THE KEY METRIC)
+  Models evaluated on authors never seen during training
+======================================================================
+  Resonance holdout PPL:  1.72 (loss=0.5414)
+  Baseline holdout PPL:   1.65 (loss=0.4993)
+  Loss ratio (base/res): 0.92x
+
+  VERDICT: No significant generalization difference (1.72 vs 1.65)
+
+======================================================================
+SECTION 3: GENERALIZATION GAP (holdout PPL - train PPL)
+======================================================================
+  Resonance gap: +0.71 PPL (1.01 → 1.72)
+  Baseline gap:  +0.52 PPL (1.13 → 1.65)
+  Baseline has smaller generalization penalty
+
+======================================================================
+SECTION 4: PER-AUTHOR HOLDOUT BREAKDOWN
+======================================================================
+  Author                  Res PPL   Base PPL    Advantage
+  ----------------------------------------------------
+  Plato                      1.74       1.68   Base +3.6%
+    (Resonance gates=0.251, iters=5.9)
+  Jane Austen                1.27       1.26   Base +0.5%
+    (Resonance gates=0.254, iters=5.8)
+  Charles Darwin             1.61       1.55   Base +3.5%
+    (Resonance gates=0.249, iters=5.8)
+
+======================================================================
+SECTION 5: ADAPTIVE BEHAVIOR — HOLDOUT vs TRAIN
+  Does the model adjust gates/iters for unseen text?
+======================================================================
+  Train:   gates=0.238, iters=5.0
+  Holdout: gates=0.256, iters=5.5
+  Delta:   gates=+0.017, iters=+0.5
+
+  SIGNAL: Model adjusts computation for unseen text
+
+======================================================================
+END OF REPORT
+======================================================================

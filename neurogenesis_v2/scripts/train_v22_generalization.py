@@ -228,10 +228,10 @@ def eval_model(model, dataset, config, label, device='cpu', is_resonance=True):
     loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
     model.eval()
 
-    per_cat = defaultdict(lambda: {'loss': [], 'count': 0})
     if is_resonance:
-        for k in per_cat:
-            per_cat[k].update({'gates': [], 'iters': []})
+        per_cat = defaultdict(lambda: {'loss': [], 'count': 0, 'gates': [], 'iters': []})
+    else:
+        per_cat = defaultdict(lambda: {'loss': [], 'count': 0})
 
     total_loss = 0.0
     total_count = 0
@@ -523,6 +523,8 @@ def main():
                         default='both')
     parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--steps', type=int, default=TOTAL_STEPS)
+    parser.add_argument('--eval-only', action='store_true', default=False,
+                        help='Skip training, load from checkpoints_v2.2/')
     args = parser.parse_args()
 
     # Config
@@ -547,15 +549,32 @@ def main():
 
     # ─── TRAINING PHASE ──────────────────────────────────────────────────
 
-    if args.mode in ('baseline', 'both'):
-        base_model = train_baseline(config, train_dataset, args.steps, args.device)
-        torch.save(base_model.state_dict(), 'checkpoints_v2.2/baseline_v22.pt')
-        print("Saved checkpoints_v2.2/baseline_v22.pt")
+    if args.eval_only:
+        print("\n--- Loading from checkpoints (eval-only mode) ---")
+        if args.mode in ('baseline', 'both'):
+            base_model = BaselineTransformer(
+                vocab_size=config.vocab_size, d_model=128,
+                n_heads=8, n_layers=2, d_ffn=512, max_seq_len=128
+            ).to(args.device)
+            base_model.load_state_dict(torch.load('checkpoints_v2.2/baseline_v22.pt',
+                                                    map_location=args.device, weights_only=True))
+            print(f"Loaded baseline from checkpoints_v2.2/baseline_v22.pt")
 
-    if args.mode in ('resonance', 'both'):
-        res_model = train_resonance(config, train_dataset, args.steps, args.device)
-        torch.save(res_model.state_dict(), 'checkpoints_v2.2/resonance_v22.pt')
-        print("Saved checkpoints_v2.2/resonance_v22.pt")
+        if args.mode in ('resonance', 'both'):
+            res_model = ResonanceModel(config).to(args.device)
+            res_model.load_state_dict(torch.load('checkpoints_v2.2/resonance_v22.pt',
+                                                   map_location=args.device, weights_only=True))
+            print(f"Loaded resonance from checkpoints_v2.2/resonance_v22.pt")
+    else:
+        if args.mode in ('baseline', 'both'):
+            base_model = train_baseline(config, train_dataset, args.steps, args.device)
+            torch.save(base_model.state_dict(), 'checkpoints_v2.2/baseline_v22.pt')
+            print("Saved checkpoints_v2.2/baseline_v22.pt")
+
+        if args.mode in ('resonance', 'both'):
+            res_model = train_resonance(config, train_dataset, args.steps, args.device)
+            torch.save(res_model.state_dict(), 'checkpoints_v2.2/resonance_v22.pt')
+            print("Saved checkpoints_v2.2/resonance_v22.pt")
 
     # ─── EVALUATION PHASE ────────────────────────────────────────────────
 
