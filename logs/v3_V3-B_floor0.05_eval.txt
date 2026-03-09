@@ -1,0 +1,25 @@
+
+======================================================================
+EVALUATION: V3-B_floor0.05
+======================================================================
+
+  V3-B_floor0.05 on TRAIN: loss=0.0581, ppl=1.06 (1559 batches)
+    Gate variance (across samples): 0.000281
+    philosophy  : loss=0.0671, ppl=1.07, gates=0.224, iters=6.0
+    fiction     : loss=0.0638, ppl=1.07, gates=0.224, iters=6.0
+    science     : loss=0.0544, ppl=1.06, gates=0.224, iters=6.0
+    synthetic   : loss=0.0545, ppl=1.06, gates=0.223, iters=6.0
+    quran       : loss=0.0526, ppl=1.05, gates=0.224, iters=6.0
+
+  V3-B_floor0.05 on HOLDOUT: loss=0.4816, ppl=1.62 (255 batches)
+    Gate variance (across samples): 0.000164
+    philosophy  : loss=0.4917, ppl=1.64, gates=0.236, iters=6.0
+    fiction     : loss=0.4656, ppl=1.59, gates=0.236, iters=6.0
+    science     : loss=0.4824, ppl=1.62, gates=0.236, iters=6.0
+
+  V3-B_floor0.05 per-author — Per-Author Holdout Breakdown:
+    Charles Darwin           : loss=0.4134, ppl=1.51, n=2413, gates=0.233, iters=6.3
+    Jane Austen              : loss=0.2220, ppl=1.25, n=1843, gates=0.236, iters=6.2
+    Plato (Apology)          : loss=0.4372, ppl=1.55, n=228, gates=0.237, iters=6.3
+    Plato (Republic)         : loss=0.4680, ppl=1.60, n=3107, gates=0.237, iters=6.3
+    Plato (Symposium)        : loss=0.6537, ppl=1.92, n=475, gates=0.237, iters=6.3

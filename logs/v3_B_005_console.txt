@@ -10,3 +10,146 @@ V3 config: gate_floor=0.05, gate_min=0.0, gate_max=1.0, diversity_lambda=0.0, no
 V3 RESONANCE TRAINING [V3-B_floor0.05]: 9000 steps
 Training samples: 49,877 (holdout authors excluded)
 ============================================================
+  Step 500/9000: loss=0.8781, ppl=2.41, iters=7, gates=0.215±0.029, alive=512, 2.5 it/s
+  [Mitosis] step 500: +7 split, -7 pruned, alive=512
+  Step 1000/9000: loss=0.1874, ppl=1.21, iters=7, gates=0.206±0.011, alive=512, 2.6 it/s
+  [Mitosis] step 1000: +7 split, -7 pruned, alive=512
+  Step 1500/9000: loss=0.1844, ppl=1.20, iters=7, gates=0.203±0.001, alive=512, 2.6 it/s
+  [Mitosis] step 1500: +11 split, -11 pruned, alive=512
+  Step 2000/9000: loss=0.1589, ppl=1.17, iters=7, gates=0.204±0.001, alive=512, 2.6 it/s
+  [Mitosis] step 2000: +5 split, -5 pruned, alive=512
+  Step 2500/9000: loss=0.1500, ppl=1.16, iters=7, gates=0.203±0.001, alive=512, 2.6 it/s
+  [Mitosis] step 2500: +11 split, -11 pruned, alive=512
+  Step 3000/9000: loss=0.1547, ppl=1.17, iters=6, gates=0.203±0.001, alive=512, 2.6 it/s
+  Checkpoint saved: checkpoints_v3/V3-B_floor0.05_step3000.pt
+  [Mitosis] step 3000: +42 split, -42 pruned, alive=512
+  Step 3500/9000: loss=0.1391, ppl=1.15, iters=6, gates=0.204±0.002, alive=512, 2.7 it/s
+  [Mitosis] step 3500: +26 split, -26 pruned, alive=512
+  Step 4000/9000: loss=0.1354, ppl=1.15, iters=6, gates=0.203±0.001, alive=512, 2.7 it/s
+  [Mitosis] step 4000: +36 split, -36 pruned, alive=512
+  Step 4500/9000: loss=0.1351, ppl=1.14, iters=6, gates=0.204±0.002, alive=512, 2.7 it/s
+  [Mitosis] step 4500: +48 split, -48 pruned, alive=512
+  Step 5000/9000: loss=0.1164, ppl=1.12, iters=6, gates=0.206±0.007, alive=512, 2.8 it/s
+  [Mitosis] step 5000: +32 split, -32 pruned, alive=512
+  Step 5500/9000: loss=0.1132, ppl=1.12, iters=6, gates=0.205±0.003, alive=512, 2.8 it/s
+  [Mitosis] step 5500: +47 split, -47 pruned, alive=512
+  Step 6000/9000: loss=0.1176, ppl=1.12, iters=6, gates=0.208±0.006, alive=512, 2.8 it/s
+  Checkpoint saved: checkpoints_v3/V3-B_floor0.05_step6000.pt
+  [Mitosis] step 6000: +77 split, -77 pruned, alive=512
+  Step 6500/9000: loss=0.1156, ppl=1.12, iters=6, gates=0.212±0.009, alive=512, 2.8 it/s
+  [Mitosis] step 6500: +56 split, -56 pruned, alive=512
+  Step 7000/9000: loss=0.0937, ppl=1.10, iters=6, gates=0.216±0.013, alive=512, 2.8 it/s
+  [Mitosis] step 7000: +37 split, -37 pruned, alive=512
+  Step 7500/9000: loss=0.0978, ppl=1.10, iters=6, gates=0.214±0.012, alive=512, 2.8 it/s
+  [Mitosis] step 7500: +59 split, -59 pruned, alive=512
+  Step 8000/9000: loss=0.0972, ppl=1.10, iters=6, gates=0.223±0.020, alive=512, 2.8 it/s
+  [Mitosis] step 8000: +39 split, -39 pruned, alive=512
+  Step 8500/9000: loss=0.0732, ppl=1.08, iters=6, gates=0.222±0.019, alive=512, 2.9 it/s
+  [Mitosis] step 8500: +20 split, -20 pruned, alive=512
+  Step 9000/9000: loss=0.0688, ppl=1.07, iters=6, gates=0.227±0.021, alive=512, 2.9 it/s
+
+Resonance done: loss=0.0688, ppl=1.07 (3140s)
+Final checkpoint: checkpoints_v3/V3-B_floor0.05_final.pt
+
+======================================================================
+EVALUATION: V3-B_floor0.05
+======================================================================
+
+  V3-B_floor0.05 on TRAIN: loss=0.0581, ppl=1.06 (1559 batches)
+    Gate variance (across samples): 0.000281
+    philosophy  : loss=0.0671, ppl=1.07, gates=0.224, iters=6.0
+    fiction     : loss=0.0638, ppl=1.07, gates=0.224, iters=6.0
+    science     : loss=0.0544, ppl=1.06, gates=0.224, iters=6.0
+    synthetic   : loss=0.0545, ppl=1.06, gates=0.223, iters=6.0
+    quran       : loss=0.0526, ppl=1.05, gates=0.224, iters=6.0
+
+  V3-B_floor0.05 on HOLDOUT: loss=0.4816, ppl=1.62 (255 batches)
+    Gate variance (across samples): 0.000164
+    philosophy  : loss=0.4917, ppl=1.64, gates=0.236, iters=6.0
+    fiction     : loss=0.4656, ppl=1.59, gates=0.236, iters=6.0
+    science     : loss=0.4824, ppl=1.62, gates=0.236, iters=6.0
+
+  V3-B_floor0.05 per-author — Per-Author Holdout Breakdown:
+    Charles Darwin           : loss=0.4134, ppl=1.51, n=2413, gates=0.233, iters=6.3
+    Jane Austen              : loss=0.2220, ppl=1.25, n=1843, gates=0.236, iters=6.2
+    Plato (Apology)          : loss=0.4372, ppl=1.55, n=228, gates=0.237, iters=6.3
+    Plato (Republic)         : loss=0.4680, ppl=1.60, n=3107, gates=0.237, iters=6.3
+    Plato (Symposium)        : loss=0.6537, ppl=1.92, n=475, gates=0.237, iters=6.3
+
+======================================================================
+V3 EXPERIMENT REPORT: V3-B_floor0.05
+Author-Holdout Test: Plato, Austen, Darwin
+======================================================================
+
+Modifications:
+  Gate floor: 0.05
+
+======================================================================
+SECTION 1: TRAINING DATA PPL
+======================================================================
+  V3-B_floor0.05 train PPL:    1.06 (loss=0.0581)
+  V2 Resonance ref:    1.01
+  Baseline ref:        1.13
+
+======================================================================
+SECTION 2: HOLDOUT PPL (THE KEY METRIC)
+======================================================================
+  V3-B_floor0.05 holdout PPL:  1.62 (loss=0.4816)
+  V2 Resonance ref:    1.72
+  Baseline ref:        1.65
+
+  VERDICT: BEATS BASELINE (1.62 < 1.65)
+
+======================================================================
+SECTION 3: GENERALIZATION GAP (holdout PPL - train PPL)
+======================================================================
+  V3-B_floor0.05 gap:          +0.56 (1.06 → 1.62)
+  V2 Resonance gap:    +0.71
+  Baseline gap:        +0.52
+
+======================================================================
+SECTION 4: GATE VARIANCE (adaptive behavior)
+======================================================================
+  V3-B_floor0.05 train gate var:   0.000281
+  V3-B_floor0.05 holdout gate var: 0.000164
+  V2 Resonance gate var:   0.001400
+
+  Gate variance not meaningfully changed
+
+  Per-category gates (train):
+    philosophy  : gates=0.2241, iters=6.0
+    fiction     : gates=0.2241, iters=6.0
+    science     : gates=0.2241, iters=6.0
+    synthetic   : gates=0.2233, iters=6.0
+    quran       : gates=0.2239, iters=6.0
+
+  Per-category gates (holdout):
+    philosophy  : gates=0.2363, iters=6.0
+    fiction     : gates=0.2363, iters=6.0
+    science     : gates=0.2361, iters=6.0
+
+======================================================================
+SECTION 5: PER-AUTHOR HOLDOUT BREAKDOWN
+======================================================================
+  Author                   V3 PPL   Base ref V2 Res ref
+  -------------------------------------------------------
+  Plato                      1.68       1.65       1.72
+    (gates=0.237, iters=6.3)
+  Jane Austen                1.25       1.65       1.72
+    (gates=0.236, iters=6.2)
+  Charles Darwin             1.51       1.65       1.72
+    (gates=0.233, iters=6.3)
+
+======================================================================
+SECTION 6: ADAPTIVE BEHAVIOR — HOLDOUT vs TRAIN
+======================================================================
+  Train:   gates=0.224, iters=6.0
+  Holdout: gates=0.236, iters=6.0
+  Delta:   gates=+0.013, iters=+0.0
+
+======================================================================
+END OF REPORT
+======================================================================
+
+Report saved to logs/v3_V3-B_floor0.05_report.txt
+Summary updated: logs/v3_summary.txt
