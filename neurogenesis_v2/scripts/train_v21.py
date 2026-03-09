@@ -28,7 +28,9 @@ from neurogenesis_v2.config import ResonanceConfig
 from neurogenesis_v2.model.resonance_model import ResonanceModel
 from neurogenesis_v2.model.mitosis import MitosisEngine
 from neurogenesis_v2.training.losses import gate_sparsity_loss, ponder_cost_loss, multitimescale_loss
-from neurogenesis_v2.training.category_dataset import CategoryTextDataset, CATEGORY_NAMES
+from neurogenesis_v2.training.category_dataset import (
+    CategoryTextDataset, CATEGORY_NAMES, load_pretokenized, pretokenize_corpus
+)
 from neurogenesis_v2.baseline.transformer import BaselineTransformer
 from neurogenesis.tokenizer.bpe import load_tokenizer
 
@@ -49,6 +51,7 @@ LEARNING_RATE = 3e-4
 BATCH_SIZE = 32
 
 CORPUS_PATH = 'data/expanded_corpus.jsonl'
+TOKENIZED_PATH = 'data/expanded_corpus_tokenized.pt'
 TOKENIZER_PATH = 'tokenizer/expanded_tokenizer.json'
 
 
@@ -233,8 +236,77 @@ def train_baseline_model(config, dataset, num_steps, device='cpu'):
     return model, avg, ppl, per_cat_metrics
 
 
+def eval_resonance(model, dataset, config, num_batches=500, device='cpu'):
+    """Clean eval of Resonance model with per-category metrics.
+
+    Per Chief Scientist: eval PPL is the true measure, not training PPL.
+    Also logs eval-time iteration counts and gates per category.
+    """
+    loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
+    model.eval()
+
+    per_cat = defaultdict(lambda: {'loss': [], 'gates': [], 'iters': []})
+    total_loss = 0
+    count = 0
+
+    with torch.no_grad():
+        for input_ids, target_ids, cat_idx in loader:
+            if count >= num_batches:
+                break
+            input_ids = input_ids.to(device).clamp(0, config.vocab_size - 1)
+            target_ids = target_ids.to(device).clamp(0, config.vocab_size - 1)
+
+            output = model(input_ids, max_iterations=8, use_momentum=True)
+            loss = F.cross_entropy(output['logits'], target_ids[:, -1])
+
+            gate_mean = output['all_gates'][-1].mean().item() if output['all_gates'] else 0
+            iters = output['num_iterations']
+
+            total_loss += loss.item()
+            for i in range(len(cat_idx)):
+                c = cat_idx[i].item()
+                per_cat[c]['loss'].append(loss.item())
+                per_cat[c]['gates'].append(gate_mean)
+                per_cat[c]['iters'].append(iters)
+            count += 1
+
+    avg_loss = total_loss / count
+    avg_ppl = math.exp(min(avg_loss, 20))
+    return avg_loss, avg_ppl, per_cat
+
+
+def eval_baseline(model, dataset, config, num_batches=500, device='cpu'):
+    """Clean eval of Baseline model with per-category metrics."""
+    loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
+    model.eval()
+
+    per_cat = defaultdict(lambda: {'loss': []})
+    total_loss = 0
+    count = 0
+
+    with torch.no_grad():
+        for input_ids, target_ids, cat_idx in loader:
+            if count >= num_batches:
+                break
+            input_ids = input_ids.to(device).clamp(0, config.vocab_size - 1)
+            target_ids = target_ids.to(device).clamp(0, config.vocab_size - 1)
+
+            logits = model(input_ids)
+            loss = F.cross_entropy(logits, target_ids[:, -1])
+
+            total_loss += loss.item()
+            for i in range(len(cat_idx)):
+                c = cat_idx[i].item()
+                per_cat[c]['loss'].append(loss.item())
+            count += 1
+
+    avg_loss = total_loss / count
+    avg_ppl = math.exp(min(avg_loss, 20))
+    return avg_loss, avg_ppl, per_cat
+
+
 def analyze_results(res_ppl, base_ppl, res_cats, base_cats):
-    """Produce B1 and B2 analysis."""
+    """Produce B1 and B2 analysis using EVAL metrics (per Chief Scientist)."""
     lines = []
     lines.append("=" * 70)
     lines.append("V2.1 ANALYSIS REPORT")
@@ -342,9 +414,15 @@ def main():
     config.vocab_size = tokenizer.get_vocab_size()
     print(f"Tokenizer: vocab={config.vocab_size}")
 
-    # Load dataset
-    print(f"Loading dataset from {CORPUS_PATH}...")
-    dataset = CategoryTextDataset(CORPUS_PATH, tokenizer, seq_len=config.max_seq_len)
+    # Load dataset (pre-tokenized for fast loading)
+    if os.path.exists(TOKENIZED_PATH):
+        print(f"Loading pre-tokenized dataset from {TOKENIZED_PATH}...")
+        dataset = load_pretokenized(TOKENIZED_PATH)
+    else:
+        print(f"Pre-tokenizing corpus (one-time)...")
+        dataset = pretokenize_corpus(CORPUS_PATH, tokenizer,
+                                     seq_len=config.max_seq_len,
+                                     save_path=TOKENIZED_PATH)
     print(f"Dataset: {len(dataset):,} samples")
 
     os.makedirs('checkpoints_v2.1', exist_ok=True)
@@ -371,9 +449,58 @@ def main():
         torch.save(res_model.state_dict(), f'checkpoints_v2.1/{ckpt_name}')
         print(f"Resonance saved to checkpoints_v2.1/{ckpt_name}")
 
-    # Analysis
-    if args.mode == 'both' and res_ppl > 0 and base_ppl > 0:
-        report = analyze_results(res_ppl, base_ppl, res_cats, base_cats)
+    # ─── EVAL PHASE (per Chief Scientist: always eval, don't trust training PPL) ───
+    print(f"\n{'='*70}")
+    print("EVALUATION PHASE — Clean eval metrics for architecture comparison")
+    print(f"{'='*70}")
+
+    eval_res_ppl = eval_base_ppl = 0
+    eval_res_cats = eval_base_cats = {}
+
+    if args.mode in ('baseline', 'both') and 'base_model' in dir():
+        print("\nEvaluating Baseline...")
+        eval_base_loss, eval_base_ppl, eval_base_cats = eval_baseline(
+            base_model, dataset, config, num_batches=500, device=args.device
+        )
+        print(f"  Baseline EVAL: loss={eval_base_loss:.4f}, ppl={eval_base_ppl:.2f}")
+
+        # Per-category baseline eval (per Chief Scientist: need baseline per-cat for B2)
+        for c in sorted(eval_base_cats.keys()):
+            cat_name = CATEGORY_NAMES.get(c, f'cat_{c}')
+            m = eval_base_cats[c]
+            cat_loss = sum(m['loss']) / len(m['loss'])
+            cat_ppl = math.exp(min(cat_loss, 20))
+            print(f"    {cat_name:<12}: eval_loss={cat_loss:.3f}, eval_ppl={cat_ppl:.2f}")
+
+    if args.mode in ('resonance', 'both') and 'res_model' in dir():
+        print("\nEvaluating Resonance...")
+        eval_res_loss, eval_res_ppl, eval_res_cats = eval_resonance(
+            res_model, dataset, config, num_batches=500, device=args.device
+        )
+        print(f"  Resonance EVAL: loss={eval_res_loss:.4f}, ppl={eval_res_ppl:.2f}")
+
+        # Log eval-time iters/gates
+        for c in sorted(eval_res_cats.keys()):
+            cat_name = CATEGORY_NAMES.get(c, f'cat_{c}')
+            m = eval_res_cats[c]
+            cat_loss = sum(m['loss']) / len(m['loss'])
+            cat_gates = sum(m['gates']) / len(m['gates'])
+            cat_iters = sum(m['iters']) / len(m['iters'])
+            print(f"    {cat_name:<12}: eval_loss={cat_loss:.3f}, "
+                  f"eval_gates={cat_gates:.3f}, eval_iters={cat_iters:.1f}")
+
+    # Analysis (using EVAL metrics, not training metrics)
+    if args.mode == 'both' and eval_res_ppl > 0 and eval_base_ppl > 0:
+        report = analyze_results(eval_res_ppl, eval_base_ppl, eval_res_cats, eval_base_cats)
+
+        # Add training vs eval comparison
+        report += f"\n\n{'='*70}\n"
+        report += "TRAINING vs EVAL PPL COMPARISON\n"
+        report += f"{'='*70}\n"
+        report += f"  Baseline:  training_ppl={base_ppl:.2f}, eval_ppl={eval_base_ppl:.2f}\n"
+        report += f"  Resonance: training_ppl={res_ppl:.2f}, eval_ppl={eval_res_ppl:.2f}\n"
+        report += f"  (Training PPL is a running average — eval PPL is the true measure)\n"
+
         print(report)
         with open('logs/v2.1_analysis_report.txt', 'w') as f:
             f.write(report)
