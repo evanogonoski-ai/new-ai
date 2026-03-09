@@ -24,3 +24,24 @@ Training samples: 49,877 (holdout authors excluded)
   [Mitosis] step 4000: +31 split, -31 pruned, alive=512
   Step 4500/9000: loss=0.1343, ppl=1.14, iters=6, gates=0.252±0.144, alive=512, 1.7 it/s
   [Mitosis] step 4500: +70 split, -70 pruned, alive=512
+  Step 5000/9000: loss=0.1154, ppl=1.12, iters=5, gates=0.254±0.135, alive=512, 1.8 it/s
+  [Mitosis] step 5000: +36 split, -36 pruned, alive=512
+  Step 5500/9000: loss=0.1239, ppl=1.13, iters=5, gates=0.264±0.158, alive=512, 1.9 it/s
+  [Mitosis] step 5500: +50 split, -50 pruned, alive=512
+  Step 6000/9000: loss=0.1172, ppl=1.12, iters=5, gates=0.271±0.170, alive=512, 1.9 it/s
+  Checkpoint saved: checkpoints_v3/V3-B_floor0.1_step6000.pt
+  [Mitosis] step 6000: +62 split, -62 pruned, alive=512
+  Step 6500/9000: loss=0.1019, ppl=1.11, iters=5, gates=0.281±0.179, alive=512, 2.0 it/s
+  [Mitosis] step 6500: +57 split, -57 pruned, alive=512
+  Step 7000/9000: loss=0.0926, ppl=1.10, iters=5, gates=0.287±0.175, alive=512, 2.1 it/s
+  [Mitosis] step 7000: +17 split, -17 pruned, alive=512
+  Step 7500/9000: loss=0.0967, ppl=1.10, iters=6, gates=0.275±0.155, alive=512, 2.1 it/s
+  [Mitosis] step 7500: +48 split, -48 pruned, alive=512
+  Step 8000/9000: loss=0.0889, ppl=1.09, iters=6, gates=0.288±0.191, alive=512, 2.2 it/s
+  [Mitosis] step 8000: +51 split, -51 pruned, alive=512
+  Step 8500/9000: loss=0.0677, ppl=1.07, iters=5, gates=0.295±0.193, alive=512, 2.2 it/s
+  [Mitosis] step 8500: +11 split, -11 pruned, alive=512
+  Step 9000/9000: loss=0.0744, ppl=1.08, iters=5, gates=0.296±0.200, alive=512, 2.3 it/s
+
+Resonance done: loss=0.0744, ppl=1.08 (3980s)
+Final checkpoint: checkpoints_v3/V3-B_floor0.1_final.pt
