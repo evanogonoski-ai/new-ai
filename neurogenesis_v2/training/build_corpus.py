@@ -4,6 +4,10 @@
 Reads from corpus/raw/{category}/, chunks on sentence boundaries
 at ~128 tokens with 10-20 token overlap, tags with metadata,
 saves as data/expanded_corpus.jsonl.
+
+V2.2: Also produces author-holdout split for generalization testing.
+  - data/train_corpus.jsonl  (everything except holdout authors)
+  - data/holdout_corpus.jsonl (holdout authors only)
 """
 import json
 import os
@@ -16,11 +20,17 @@ from neurogenesis.tokenizer.bpe import load_tokenizer
 
 CORPUS_DIR = 'corpus/raw'
 OUTPUT_PATH = 'data/expanded_corpus.jsonl'
+TRAIN_PATH = 'data/train_corpus.jsonl'
+HOLDOUT_PATH = 'data/holdout_corpus.jsonl'
 TOKENIZER_PATH = 'tokenizer/expanded_tokenizer.json'
 TARGET_CHUNK_TOKENS = 128
 OVERLAP_TOKENS = 15
 
 CATEGORIES = ['philosophy', 'fiction', 'science', 'synthetic', 'quran']
+
+# V2.2: Authors held out for generalization testing.
+# Model never sees these during training; evaluated on them afterward.
+HOLDOUT_PREFIXES = ['plato_', 'jane_austen_', 'charles_darwin_']
 
 
 def sentence_split(text):
@@ -74,10 +84,21 @@ def chunk_text(text, tokenizer, target_tokens=TARGET_CHUNK_TOKENS,
     return chunks
 
 
+def is_holdout(source):
+    """Check if a source belongs to a holdout author."""
+    return any(source.startswith(prefix) for prefix in HOLDOUT_PREFIXES)
+
+
 def build_corpus():
-    """Read all raw texts, chunk, tag, and save as JSONL."""
+    """Read all raw texts, chunk, tag, and save as JSONL.
+
+    Produces three files:
+      - expanded_corpus.jsonl  (full corpus, backward compat)
+      - train_corpus.jsonl     (everything except holdout authors)
+      - holdout_corpus.jsonl   (holdout authors only)
+    """
     print("=" * 60)
-    print("BUILDING EXPANDED CORPUS")
+    print("BUILDING EXPANDED CORPUS (with V2.2 holdout split)")
     print("=" * 60)
 
     # Load tokenizer
@@ -88,6 +109,7 @@ def build_corpus():
 
     tokenizer = load_tokenizer(TOKENIZER_PATH)
     print(f"Loaded tokenizer: vocab={tokenizer.get_vocab_size()}")
+    print(f"Holdout authors: {HOLDOUT_PREFIXES}")
 
     all_chunks = []
     category_stats = {}
@@ -110,6 +132,7 @@ def build_corpus():
                 content = f.read()
 
             source = fname.replace('.txt', '')
+            holdout = is_holdout(source)
 
             # For synthetic texts, split on separator first
             if category == 'synthetic':
@@ -128,12 +151,15 @@ def build_corpus():
                         'source': source,
                         'chunk_id': file_chunks + i,
                         'token_count': token_count,
+                        'holdout': holdout,
                     }
                     all_chunks.append(entry)
                     cat_tokens += token_count
                 file_chunks += len(chunks)
 
             cat_chunks += file_chunks
+            if holdout:
+                print(f"    [HOLDOUT] {source}: {file_chunks} chunks")
 
         category_stats[category] = {'chunks': cat_chunks, 'tokens': cat_tokens}
         print(f"  {category}: {cat_chunks:,} chunks, {cat_tokens:,} tokens")
@@ -143,15 +169,29 @@ def build_corpus():
     random.seed(42)
     random.shuffle(all_chunks)
 
-    # Save as JSONL
+    # Split into train and holdout
+    train_chunks = [c for c in all_chunks if not c['holdout']]
+    holdout_chunks = [c for c in all_chunks if c['holdout']]
+
+    # Save all three files
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, 'w', encoding='utf-8') as f:
-        for entry in all_chunks:
-            f.write(json.dumps(entry, ensure_ascii=False) + '\n')
+
+    for path, chunks, label in [
+        (OUTPUT_PATH, all_chunks, 'full corpus'),
+        (TRAIN_PATH, train_chunks, 'train split'),
+        (HOLDOUT_PATH, holdout_chunks, 'holdout split'),
+    ]:
+        with open(path, 'w', encoding='utf-8') as f:
+            for entry in chunks:
+                f.write(json.dumps(entry, ensure_ascii=False) + '\n')
+        size_mb = os.path.getsize(path) / 1024 / 1024
+        print(f"  Saved {label}: {path} ({len(chunks):,} chunks, {size_mb:.1f} MB)")
 
     # Summary
     total_chunks = len(all_chunks)
     total_tokens = sum(s['tokens'] for s in category_stats.values())
+    train_tokens = sum(c['token_count'] for c in train_chunks)
+    holdout_tokens = sum(c['token_count'] for c in holdout_chunks)
 
     print(f"\n{'='*60}")
     print("CORPUS SUMMARY")
@@ -165,8 +205,29 @@ def build_corpus():
             print(f"  {cat:<13} {s['chunks']:>10,} {s['tokens']:>12,} {pct:>7.1f}%")
     print(f"{'-'*45}")
     print(f"  {'TOTAL':<13} {total_chunks:>10,} {total_tokens:>12,}")
-    print(f"\nSaved to {OUTPUT_PATH}")
-    print(f"File size: {os.path.getsize(OUTPUT_PATH) / 1024 / 1024:.1f} MB")
+
+    print(f"\n{'='*60}")
+    print("HOLDOUT SPLIT")
+    print(f"{'='*60}")
+    print(f"  Train:   {len(train_chunks):>8,} chunks, {train_tokens:>10,} tokens")
+    print(f"  Holdout: {len(holdout_chunks):>8,} chunks, {holdout_tokens:>10,} tokens")
+    pct = holdout_tokens / total_tokens * 100 if total_tokens > 0 else 0
+    print(f"  Holdout is {pct:.1f}% of corpus")
+
+    # Per-author holdout breakdown
+    holdout_by_source = {}
+    for c in holdout_chunks:
+        src = c['source']
+        if src not in holdout_by_source:
+            holdout_by_source[src] = {'chunks': 0, 'tokens': 0, 'category': c['category']}
+        holdout_by_source[src]['chunks'] += 1
+        holdout_by_source[src]['tokens'] += c['token_count']
+
+    print(f"\n  Holdout authors:")
+    for src in sorted(holdout_by_source.keys()):
+        info = holdout_by_source[src]
+        print(f"    {src:<45} {info['category']:<12} "
+              f"{info['chunks']:>6} chunks, {info['tokens']:>8} tokens")
 
     return category_stats
 

@@ -99,3 +99,29 @@ def load_pretokenized(path):
     """Load pre-tokenized dataset from .pt file."""
     data = torch.load(path, weights_only=True)
     return CategoryTextDataset(data['samples'], data['categories'])
+
+
+def build_train_holdout_datasets(tokenizer, seq_len=128,
+                                  train_jsonl='data/train_corpus.jsonl',
+                                  holdout_jsonl='data/holdout_corpus.jsonl',
+                                  train_pt='data/train_tokenized.pt',
+                                  holdout_pt='data/holdout_tokenized.pt'):
+    """Load or build pre-tokenized train and holdout datasets.
+
+    Returns (train_dataset, holdout_dataset).
+    """
+    datasets = []
+    for jsonl, pt, label in [
+        (train_jsonl, train_pt, 'train'),
+        (holdout_jsonl, holdout_pt, 'holdout'),
+    ]:
+        if os.path.exists(pt):
+            print(f"Loading {label} from {pt}...")
+            ds = load_pretokenized(pt)
+        else:
+            print(f"Pre-tokenizing {label} from {jsonl}...")
+            ds = pretokenize_corpus(jsonl, tokenizer, seq_len=seq_len, save_path=pt)
+        print(f"  {label}: {len(ds):,} samples")
+        datasets.append(ds)
+
+    return datasets[0], datasets[1]
