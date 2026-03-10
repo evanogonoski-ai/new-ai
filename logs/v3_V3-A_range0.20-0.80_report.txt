@@ -1,0 +1,74 @@
+======================================================================
+V3 EXPERIMENT REPORT: V3-A_range0.20-0.80
+Author-Holdout Test: Plato, Austen, Darwin
+======================================================================
+
+Modifications:
+  Gate range: [0.2, 0.8]
+
+======================================================================
+SECTION 1: TRAINING DATA PPL
+======================================================================
+  V3-A_range0.20-0.80 train PPL:    1.16 (loss=0.1477)
+  V2 Resonance ref:    1.01
+  Baseline ref:        1.13
+
+======================================================================
+SECTION 2: HOLDOUT PPL (THE KEY METRIC)
+======================================================================
+  V3-A_range0.20-0.80 holdout PPL:  1.50 (loss=0.4050)
+  V2 Resonance ref:    1.72
+  Baseline ref:        1.65
+
+  VERDICT: BEATS BASELINE (1.50 < 1.65)
+
+======================================================================
+SECTION 3: GENERALIZATION GAP (holdout PPL - train PPL)
+======================================================================
+  V3-A_range0.20-0.80 gap:          +0.34 (1.16 → 1.50)
+  V2 Resonance gap:    +0.71
+  Baseline gap:        +0.52
+
+======================================================================
+SECTION 4: GATE VARIANCE (adaptive behavior)
+======================================================================
+  V3-A_range0.20-0.80 train gate var:   0.000147
+  V3-A_range0.20-0.80 holdout gate var: 0.000062
+  V2 Resonance gate var:   0.001400
+
+  Gate variance not meaningfully changed
+
+  Per-category gates (train):
+    philosophy  : gates=0.3302, iters=6.7
+    fiction     : gates=0.3302, iters=6.7
+    science     : gates=0.3303, iters=6.7
+    synthetic   : gates=0.3305, iters=6.6
+    quran       : gates=0.3303, iters=6.7
+
+  Per-category gates (holdout):
+    philosophy  : gates=0.3275, iters=7.0
+    fiction     : gates=0.3275, iters=7.0
+    science     : gates=0.3275, iters=7.0
+
+======================================================================
+SECTION 5: PER-AUTHOR HOLDOUT BREAKDOWN
+======================================================================
+  Author                   V3 PPL   Base ref V2 Res ref
+  -------------------------------------------------------
+  Plato                      1.54       1.65       1.72
+    (gates=0.327, iters=7.0)
+  Jane Austen                1.20       1.65       1.72
+    (gates=0.327, iters=6.9)
+  Charles Darwin             1.42       1.65       1.72
+    (gates=0.328, iters=7.0)
+
+======================================================================
+SECTION 6: ADAPTIVE BEHAVIOR — HOLDOUT vs TRAIN
+======================================================================
+  Train:   gates=0.330, iters=6.7
+  Holdout: gates=0.327, iters=7.0
+  Delta:   gates=-0.003, iters=+0.3
+
+======================================================================
+END OF REPORT
+======================================================================

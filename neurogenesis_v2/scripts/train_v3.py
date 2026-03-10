@@ -76,10 +76,10 @@ LOCKED_CONFIG = dict(
     gradient_clip=1.0, weight_decay=0.01,
 )
 
-TOTAL_STEPS = 9000
+TOTAL_STEPS = 2000
 LEARNING_RATE = 3e-4
 BATCH_SIZE = 32
-CHECKPOINT_INTERVAL = 3000  # save periodic checkpoints
+CHECKPOINT_INTERVAL = 1000  # save periodic checkpoints
 
 TOKENIZER_PATH = 'tokenizer/expanded_tokenizer.json'
 

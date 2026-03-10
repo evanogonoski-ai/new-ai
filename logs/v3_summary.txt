@@ -7,3 +7,10 @@ V2 Resonance (ref)     |      1.01 |        1.72 |   +0.71 |     0.0014 |     Au
 V3-B_floor0.1          |      1.06 |        1.62 |   +0.56 |   0.003461 |     Austen 1.25 |      Plato 1.66
 V3-B_floor0.05         |      1.06 |        1.62 |   +0.56 |   0.000281 |     Austen 1.25 |      Plato 1.68
 V3-B_floor0.15         |      1.06 |        1.64 |   +0.58 |   0.002562 |     Austen 1.25 |      Plato 1.70
+V3-A_range0.10-0.90    |      1.16 |        1.51 |   +0.35 |   0.000135 |     Austen 1.21 |      Plato 1.54
+V3-A_range0.15-0.85    |      1.16 |        1.51 |   +0.35 |   0.000001 |     Austen 1.21 |      Plato 1.54
+V3-A_range0.20-0.80    |      1.16 |        1.50 |   +0.34 |   0.000147 |     Austen 1.20 |      Plato 1.54
+
+NOTE: V3-B runs used 9000 training steps. V3-A runs used 2000 steps (reduced for speed).
+      Reference baselines are from 9000-step V2.2 runs.
+      V3-A still beats baseline despite fewer training steps.
