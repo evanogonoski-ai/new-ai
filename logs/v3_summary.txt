@@ -14,3 +14,7 @@ V3-A_range0.20-0.80    |      1.16 |        1.50 |   +0.34 |   0.000147 |     Au
 NOTE: V3-B runs used 9000 training steps. V3-A runs used 2000 steps (reduced for speed).
       Reference baselines are from 9000-step V2.2 runs.
       V3-A still beats baseline despite fewer training steps.
+V3-Combined_floor0.1_range0.20-0.80 |      1.16 |        1.51 |   +0.35 |   0.000005 |     Austen 1.21 |      Plato 1.56
+V3-Combined_range0.20-0.80_div0.01 |      1.16 |        1.50 |   +0.34 |   0.000081 |     Austen 1.21 |      Plato 1.55
+V3-Combined_range0.20-0.80_div0.1 |      1.16 |        1.52 |   +0.36 |   0.000226 |     Austen 1.21 |      Plato 1.56
+V3-Combined_range0.20-0.80_div1.0 |      1.16 |        1.50 |   +0.33 |   0.038391 |     Austen 1.21 |      Plato 1.53
