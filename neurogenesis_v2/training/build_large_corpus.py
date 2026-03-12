@@ -35,6 +35,7 @@ SOURCE_DIRS = {
     'data/raw_texts/additional_synthetic': 'synthetic',
     'data/raw_texts/quran':                'religious',
     'data/raw_texts/wikipedia_synthetic':  'wikipedia',
+    'data/raw_texts/wikipedia':            'wikipedia',
 }
 
 CATEGORY_IDS = {
