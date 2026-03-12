@@ -1,0 +1,43 @@
+Tokenizer: vocab=8192
+Loading train from /home/user/new-ai/data/large_train_tokenized.pt...
+  train: 248,425 samples
+Loading holdout from /home/user/new-ai/data/large_holdout_tokenized.pt...
+  holdout: 12,974 samples
+/home/user/new-ai/neurogenesis_v2/baseline/transformer.py:28: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
+Baseline 10M model: 10,646,528 params
+d_model=512, n_heads=16, n_layers=4, d_ffn=512
+batch_size=8, gradient_accumulation=1
+effective_batch_size=8
+
+======================================================================
+BASELINE 10M TRAINING: 5000 steps
+Training samples: 248,425
+======================================================================
+  Step 100/5000: loss=2.3373, ppl=10.35, lr=6.00e-05, 1.16 it/s
+  Step 200/5000: loss=0.0276, ppl=1.03, lr=1.20e-04, 1.17 it/s
+  Step 300/5000: loss=0.0216, ppl=1.02, lr=1.80e-04, 1.17 it/s
+  Step 400/5000: loss=0.0213, ppl=1.02, lr=2.40e-04, 1.15 it/s
+  Step 500/5000: loss=0.0003, ppl=1.00, lr=3.00e-04, 1.14 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step500.pt
+  Step 600/5000: loss=0.0234, ppl=1.02, lr=3.00e-04, 1.14 it/s
+  Step 700/5000: loss=0.0630, ppl=1.07, lr=2.99e-04, 1.14 it/s
+  Step 800/5000: loss=0.0453, ppl=1.05, lr=2.97e-04, 1.14 it/s
+  Step 900/5000: loss=0.0002, ppl=1.00, lr=2.94e-04, 1.15 it/s
+  Step 1000/5000: loss=0.0664, ppl=1.07, lr=2.91e-04, 1.15 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step1000.pt
+  Step 1100/5000: loss=0.0447, ppl=1.05, lr=2.87e-04, 1.15 it/s
+  Step 1200/5000: loss=0.0002, ppl=1.00, lr=2.82e-04, 1.15 it/s
+  Step 1300/5000: loss=0.0453, ppl=1.05, lr=2.77e-04, 1.15 it/s
+  Step 1400/5000: loss=0.0001, ppl=1.00, lr=2.71e-04, 1.14 it/s
+  Step 1500/5000: loss=0.0216, ppl=1.02, lr=2.65e-04, 1.14 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step1500.pt
+  Step 1600/5000: loss=0.0472, ppl=1.05, lr=2.58e-04, 1.14 it/s
+  Step 1700/5000: loss=0.0231, ppl=1.02, lr=2.50e-04, 1.14 it/s
+  Step 1800/5000: loss=0.0165, ppl=1.02, lr=2.42e-04, 1.14 it/s
+  Step 1900/5000: loss=0.0002, ppl=1.00, lr=2.34e-04, 1.14 it/s
+  Step 2000/5000: loss=0.0228, ppl=1.02, lr=2.25e-04, 1.14 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step2000.pt
+  Step 2100/5000: loss=0.0886, ppl=1.09, lr=2.16e-04, 1.14 it/s
+  Step 2200/5000: loss=0.0001, ppl=1.00, lr=2.06e-04, 1.14 it/s
+  Step 2300/5000: loss=0.0248, ppl=1.03, lr=1.96e-04, 1.14 it/s
