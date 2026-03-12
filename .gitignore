@@ -3,9 +3,21 @@ checkpoints/
 checkpoints_v2/
 checkpoints_baseline/
 checkpoints_v2.1/
+checkpoints_10M/
 
 # Large binary files
 data/*.pt
+data/*.jsonl
+
+# Large generated corpus directories
+data/raw_texts/synthetic_scaled/
+data/raw_texts/wikipedia_synthetic/
+data/raw_texts/additional_synthetic/
+data/raw_texts/gutenberg/
+data/raw_texts/gutenberg_expanded/
+data/raw_texts/synthetic/
+data/raw_texts/quran/
+neurogenesis_v2/data/
 
 # Python
 __pycache__/
