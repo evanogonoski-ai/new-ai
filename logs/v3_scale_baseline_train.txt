@@ -13,3 +13,4 @@ Training samples: 248,425
   Step 300/5000: loss=0.0602, ppl=1.06, lr=1.80e-04, 1.04 it/s
   Step 400/5000: loss=0.0204, ppl=1.02, lr=2.40e-04, 1.03 it/s
   Step 500/5000: loss=0.0003, ppl=1.00, lr=3.00e-04, 1.04 it/s
+  Step 600/5000: loss=0.0629, ppl=1.06, lr=3.00e-04, 1.04 it/s
