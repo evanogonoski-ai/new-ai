@@ -8,3 +8,4 @@ effective_batch_size=8
 BASELINE 10M TRAINING: 5000 steps
 Training samples: 248,425
 ======================================================================
+  Step 100/5000: loss=2.1613, ppl=8.68, lr=6.00e-05, 1.04 it/s
