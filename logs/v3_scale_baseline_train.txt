@@ -14,3 +14,15 @@ Training samples: 248,425
   Step 400/5000: loss=0.0204, ppl=1.02, lr=2.40e-04, 1.03 it/s
   Step 500/5000: loss=0.0003, ppl=1.00, lr=3.00e-04, 1.04 it/s
   Step 600/5000: loss=0.0629, ppl=1.06, lr=3.00e-04, 1.04 it/s
+  Step 700/5000: loss=0.0226, ppl=1.02, lr=2.99e-04, 1.03 it/s
+  Step 800/5000: loss=0.0001, ppl=1.00, lr=2.97e-04, 1.03 it/s
+  Step 900/5000: loss=0.0229, ppl=1.02, lr=2.94e-04, 1.03 it/s
+  Step 1000/5000: loss=0.0002, ppl=1.00, lr=2.91e-04, 1.03 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step1000.pt
+  Step 1100/5000: loss=0.0233, ppl=1.02, lr=2.87e-04, 1.04 it/s
+  Step 1200/5000: loss=0.0448, ppl=1.05, lr=2.82e-04, 1.04 it/s
+  Step 1300/5000: loss=0.0844, ppl=1.09, lr=2.77e-04, 1.04 it/s
+  Step 1400/5000: loss=0.0001, ppl=1.00, lr=2.71e-04, 1.05 it/s
+  Step 1500/5000: loss=0.0669, ppl=1.07, lr=2.65e-04, 1.05 it/s
+  Step 1600/5000: loss=0.0198, ppl=1.02, lr=2.58e-04, 1.06 it/s
+  Step 1700/5000: loss=0.0238, ppl=1.02, lr=2.50e-04, 1.06 it/s
