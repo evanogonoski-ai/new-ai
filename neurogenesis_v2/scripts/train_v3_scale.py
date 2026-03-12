@@ -36,11 +36,11 @@ from neurogenesis.tokenizer.bpe import load_tokenizer
 # ─── 10M Scale Config ──────────────────────────────────────────────────────
 
 RESONANCE_CONFIG = dict(
-    d_model=512,
-    n_heads=16,
+    d_model=384,
+    n_heads=12,
     d_head=32,
-    d_ffn_start=2048,
-    d_ffn_max=4096,
+    d_ffn_start=256,
+    d_ffn_max=512,
     vocab_size=8192,
     max_seq_len=256,
     # V3-A winner
