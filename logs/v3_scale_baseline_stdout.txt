@@ -36,3 +36,4 @@ Training samples: 248,398
   Step 1900/5000: loss=0.0222, ppl=1.02, lr=2.34e-04, 1.23 it/s
   Step 2000/5000: loss=0.0001, ppl=1.00, lr=2.25e-04, 1.23 it/s
   Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step2000.pt
+  Step 2100/5000: loss=0.0001, ppl=1.00, lr=2.16e-04, 1.23 it/s
