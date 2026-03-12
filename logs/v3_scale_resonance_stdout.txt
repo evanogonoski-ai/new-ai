@@ -1,0 +1,17 @@
+Tokenizer: vocab=8192
+Loading train from /home/user/new-ai/data/large_train_tokenized.pt...
+  train: 248,425 samples
+Loading holdout from /home/user/new-ai/data/large_holdout_tokenized.pt...
+  holdout: 12,974 samples
+Resonance 10M model: 17,841,666 total, 17,841,666 active params
+V3-A config: gate_min=0.2, gate_max=0.8
+d_model=512, n_heads=16, d_head=32
+d_ffn_start=2048, d_ffn_max=4096
+max_seq_len=256, max_iterations=8
+batch_size=8, gradient_accumulation=4
+effective_batch_size=32
+
+======================================================================
+RESONANCE 10M TRAINING: 5000 steps (from step 0)
+Training samples: 248,425
+======================================================================

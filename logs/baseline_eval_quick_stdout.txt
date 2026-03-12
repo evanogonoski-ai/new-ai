@@ -1,0 +1,57 @@
+Loading baseline from checkpoints_10M/baseline_final.pt...
+/home/user/new-ai/neurogenesis_v2/baseline/transformer.py:28: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
+Model: 10,646,528 params
+
+============================================================
+TRAIN EVAL (sample, 200 batches)
+============================================================
+  Train PPL: 1.0381 (loss=0.0374, n=200, 275.6s)
+
+============================================================
+HOLDOUT EVAL
+============================================================
+  Holdout PPL: 1.0585 (loss=0.0569, n=500, 684.6s)
+  Generalization Gap: +0.0205
+
+============================================================
+PER-AUTHOR HOLDOUT (max 30 per author)
+============================================================
+  Plato (Symposium)                       : ppl=1.0006 (n=30)
+  plato_republic                          : ppl=1.0006 (n=30)
+  Plato (Apology)                         : ppl=1.0006 (n=30)
+  charles_darwin_origin_of_species        : ppl=1.0006 (n=30)
+  jane_austen_pride_and_prejudice         : ppl=1.0006 (n=30)
+  (165.1s)
+
+============================================================
+GENERATION SAMPLES
+============================================================
+
+  Prompt: "Once upon a time"
+  Output: ĠConsolidation opic Ġbu Ġimpossible atively Ġsnow ologist tains Ġgri icacy Ġinquir ou Ġevolves Ġmon ians Ġlogist ile Ġdepth ught arian Ġartistic izes ou ĠEdmund Ġdim Ġstimulated ĠEn ! Ġsl atively Ġextraction ! Ġexport Ġsecure !" Ġinquir ultane ode Ġhowever Ġdim Ġproximity ultane Ġniche Ġstr ught Ġre
+  (44.6s)
+
+  Prompt: "The philosopher argued that"
+  Output: rawing Ġsnow Ġmach Ġtem j Ġn ĠIts Ġcateg ode Ġgreen Ġimmediate Ġbu Ġmanif Ġresponded Ġmanif Ġdim arily aimed Ġchan ats Ġgri ats Ġenable Ġn Ġexcludes ile arian not ile ĠO icacy ĠO Ġartistic Ġproximity arily ught ou arily arily ode Ġartistic ĠO Ġelegant Ġdim Ġextraction Ġsnow ĠO Ġer Ġobst ial Ġinquir 
+  (62.1s)
+
+  Prompt: "In the beginning"
+  Output: ou Ġartistic not Ġfox Ġextraction Ġn Ġcanyon ĠIts Ġdominant ab Ġsnow Ġdim icacy Ġspecialization rawing ertain ertain Ġanyone atively arily ou Ġwide Ġgri Ġstr ab Ġn rawing rawing Ġgri dle soon ode ab Ġanyone atively Ġreligious Ġextraction not ex Ġartistic ode ĠNetworks ocks Ġartistic Ġmon Ġer Ġmobili
+  (56.8s)
+
+  Prompt: "The experiment showed that"
+  Output: ou Ġspecialization ial ught ile ĠAnna Ġmach Ġbu !" Ġmobilized Ġprede atively Ġimmediate Ġniche atively rawing ĠHaving Ġhabitat Ġventures Ġextraction rawing rawing Ġrecurring Ġartistic plendent Ġdim ĠIts Ġpretty Ġprede ab lizabeth tains ile ission ! Ġer j Ġprede aimed ĠO ou tains Ġbu Ġcatalytic Ġshar
+  (56.6s)
+
+  Prompt: "She walked into the room and"
+  Output: plendent ode arily Ġmanif rawing not ĠO Ġmetal Ġsnow aimed ĠArch Ġwide Ġwide Ġclean ile atively Ġsnow ou not Ġsnow Ġproximity Ġhonored ab Ġbu Ġunmistakable Ġdominant arily Ġlibr ĠO Ġbu Ġref Ġam Ġdim atively Ġspread Ġoriginal Ġspectroscopic ou lizabeth ab Military arily Ġmobilized Ġimmediate arily il
+  (48.7s)
+
+============================================================
+SUMMARY: baseline
+============================================================
+  Train PPL:   1.0381
+  Holdout PPL: 1.0585
+  Gen Gap:     +0.0205
+============================================================

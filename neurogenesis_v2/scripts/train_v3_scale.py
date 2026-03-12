@@ -156,7 +156,7 @@ class WarmupCosineScheduler:
 # ─── Training: Resonance ──────────────────────────────────────────────────
 
 def train_resonance(config, dataset, num_steps, device, checkpoint_interval,
-                    logger, gradient_accumulation=1):
+                    logger, gradient_accumulation=1, resume_checkpoint=None):
     model = ResonanceModel(config).to(device)
 
     total_params = sum(p.numel() for p in model.parameters())
@@ -169,21 +169,34 @@ def train_resonance(config, dataset, num_steps, device, checkpoint_interval,
     logger.log(f"batch_size={BATCH_SIZE}, gradient_accumulation={gradient_accumulation}")
     logger.log(f"effective_batch_size={BATCH_SIZE * gradient_accumulation}")
 
+    # Resume from checkpoint if provided
+    start_step = 0
+    if resume_checkpoint:
+        model.load_state_dict(torch.load(resume_checkpoint, map_location=device, weights_only=True))
+        import re
+        m = re.search(r'step(\d+)', resume_checkpoint)
+        if m:
+            start_step = int(m.group(1))
+        logger.log(f"Resumed from {resume_checkpoint} at step {start_step}")
+
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=0.01)
     scheduler = WarmupCosineScheduler(optimizer, warmup_steps=500, total_steps=num_steps,
                                        base_lr=LEARNING_RATE)
+    # Advance scheduler to resume point
+    for _ in range(start_step):
+        scheduler.step()
 
-    mitosis = MitosisEngine(model, check_interval=500)
+    mitosis = MitosisEngine(model.block.ffn, config)
     loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0, drop_last=True)
 
     logger.log(f"\n{'='*70}")
-    logger.log(f"RESONANCE 10M TRAINING: {num_steps} steps")
+    logger.log(f"RESONANCE 10M TRAINING: {num_steps} steps (from step {start_step})")
     logger.log(f"Training samples: {len(dataset):,}")
     logger.log(f"{'='*70}")
 
     model.train()
     losses = []
-    step = 0
+    step = start_step
     accum_count = 0
     start = time.time()
 
@@ -210,7 +223,8 @@ def train_resonance(config, dataset, num_steps, device, checkpoint_interval,
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
 
                 # Mitosis check
-                mresult = mitosis.step()
+                mitosis.record_gradients()
+                mresult = mitosis.check_and_apply(step)
                 if mresult and (mresult['mitosis'] > 0 or mresult['pruned'] > 0):
                     logger.log(f"  [Mitosis] step {step}: +{mresult['mitosis']} split, "
                               f"-{mresult['pruned']} pruned, alive={mresult['alive']}")
@@ -257,7 +271,7 @@ def train_resonance(config, dataset, num_steps, device, checkpoint_interval,
 # ─── Training: Baseline ──────────────────────────────────────────────────
 
 def train_baseline(num_steps, dataset, device, checkpoint_interval, logger,
-                   gradient_accumulation=1):
+                   gradient_accumulation=1, resume_checkpoint=None):
     cfg = BASELINE_CONFIG
     model = BaselineTransformer(
         vocab_size=cfg['vocab_size'], d_model=cfg['d_model'],
@@ -271,20 +285,34 @@ def train_baseline(num_steps, dataset, device, checkpoint_interval, logger,
     logger.log(f"batch_size={BATCH_SIZE}, gradient_accumulation={gradient_accumulation}")
     logger.log(f"effective_batch_size={BATCH_SIZE * gradient_accumulation}")
 
+    # Resume from checkpoint if provided
+    start_step = 0
+    if resume_checkpoint:
+        model.load_state_dict(torch.load(resume_checkpoint, map_location=device, weights_only=True))
+        # Extract step number from checkpoint filename
+        import re
+        m = re.search(r'step(\d+)', resume_checkpoint)
+        if m:
+            start_step = int(m.group(1))
+        logger.log(f"Resumed from {resume_checkpoint} at step {start_step}")
+
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=0.01)
     scheduler = WarmupCosineScheduler(optimizer, warmup_steps=500, total_steps=num_steps,
                                        base_lr=LEARNING_RATE)
+    # Advance scheduler to resume point
+    for _ in range(start_step):
+        scheduler.step()
 
     loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0, drop_last=True)
 
     logger.log(f"\n{'='*70}")
-    logger.log(f"BASELINE 10M TRAINING: {num_steps} steps")
+    logger.log(f"BASELINE 10M TRAINING: {num_steps} steps (from step {start_step})")
     logger.log(f"Training samples: {len(dataset):,}")
     logger.log(f"{'='*70}")
 
     model.train()
     losses = []
-    step = 0
+    step = start_step
     accum_count = 0
     start = time.time()
 
@@ -598,6 +626,8 @@ def main():
     parser.add_argument('--checkpoint', type=str, default=None)
     parser.add_argument('--generate', action='store_true')
     parser.add_argument('--speed-test', action='store_true')
+    parser.add_argument('--resume', type=str, default=None,
+                        help='Path to checkpoint to resume training from')
 
     args = parser.parse_args()
 
@@ -654,12 +684,14 @@ def main():
         if is_resonance:
             model = train_resonance(
                 config, train_dataset, args.steps, args.device,
-                args.checkpoint_every, train_logger, args.gradient_accumulation
+                args.checkpoint_every, train_logger, args.gradient_accumulation,
+                resume_checkpoint=args.resume
             )
         else:
             model = train_baseline(
                 args.steps, train_dataset, args.device,
-                args.checkpoint_every, train_logger, args.gradient_accumulation
+                args.checkpoint_every, train_logger, args.gradient_accumulation,
+                resume_checkpoint=args.resume
             )
 
     train_logger.close()
