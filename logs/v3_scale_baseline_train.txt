@@ -5,29 +5,32 @@ batch_size=8, gradient_accumulation=1
 effective_batch_size=8
 
 ======================================================================
-BASELINE 10M TRAINING: 5000 steps
+BASELINE 10M TRAINING: 2000 steps (from step 0)
 Training samples: 248,425
 ======================================================================
-  Step 100/5000: loss=2.1613, ppl=8.68, lr=6.00e-05, 1.04 it/s
-  Step 200/5000: loss=0.0098, ppl=1.01, lr=1.20e-04, 1.04 it/s
-  Step 300/5000: loss=0.0602, ppl=1.06, lr=1.80e-04, 1.04 it/s
-  Step 400/5000: loss=0.0204, ppl=1.02, lr=2.40e-04, 1.03 it/s
-  Step 500/5000: loss=0.0003, ppl=1.00, lr=3.00e-04, 1.04 it/s
-  Step 600/5000: loss=0.0629, ppl=1.06, lr=3.00e-04, 1.04 it/s
-  Step 700/5000: loss=0.0226, ppl=1.02, lr=2.99e-04, 1.03 it/s
-  Step 800/5000: loss=0.0001, ppl=1.00, lr=2.97e-04, 1.03 it/s
-  Step 900/5000: loss=0.0229, ppl=1.02, lr=2.94e-04, 1.03 it/s
-  Step 1000/5000: loss=0.0002, ppl=1.00, lr=2.91e-04, 1.03 it/s
+  Step 100/2000: loss=6.7668, ppl=868.51, lr=6.00e-05, 0.97 it/s
+  Step 200/2000: loss=4.9612, ppl=142.77, lr=1.20e-04, 0.98 it/s
+  Step 300/2000: loss=4.5175, ppl=91.61, lr=1.80e-04, 0.97 it/s
+  Step 400/2000: loss=4.4945, ppl=89.52, lr=2.40e-04, 0.97 it/s
+  Step 500/2000: loss=3.9899, ppl=54.05, lr=3.00e-04, 0.97 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step500.pt
+  Step 600/2000: loss=3.8896, ppl=48.89, lr=2.97e-04, 0.98 it/s
+  Step 700/2000: loss=3.7278, ppl=41.59, lr=2.87e-04, 0.98 it/s
+  Step 800/2000: loss=3.6589, ppl=38.82, lr=2.71e-04, 0.98 it/s
+  Step 900/2000: loss=3.4660, ppl=32.01, lr=2.50e-04, 0.98 it/s
+  Step 1000/2000: loss=3.3690, ppl=29.05, lr=2.25e-04, 0.98 it/s
   Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step1000.pt
-  Step 1100/5000: loss=0.0233, ppl=1.02, lr=2.87e-04, 1.04 it/s
-  Step 1200/5000: loss=0.0448, ppl=1.05, lr=2.82e-04, 1.04 it/s
-  Step 1300/5000: loss=0.0844, ppl=1.09, lr=2.77e-04, 1.04 it/s
-  Step 1400/5000: loss=0.0001, ppl=1.00, lr=2.71e-04, 1.05 it/s
-  Step 1500/5000: loss=0.0669, ppl=1.07, lr=2.65e-04, 1.05 it/s
-  Step 1600/5000: loss=0.0198, ppl=1.02, lr=2.58e-04, 1.06 it/s
-  Step 1700/5000: loss=0.0238, ppl=1.02, lr=2.50e-04, 1.06 it/s
-  Step 1800/5000: loss=0.0646, ppl=1.07, lr=2.42e-04, 1.07 it/s
-  Step 1900/5000: loss=0.0228, ppl=1.02, lr=2.34e-04, 1.07 it/s
-  Step 2000/5000: loss=0.0231, ppl=1.02, lr=2.25e-04, 1.07 it/s
-  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step2000.pt
-  Step 2100/5000: loss=0.0308, ppl=1.03, lr=2.16e-04, 1.08 it/s
+  Step 1100/2000: loss=3.1310, ppl=22.90, lr=1.96e-04, 0.98 it/s
+  Step 1200/2000: loss=3.0675, ppl=21.49, lr=1.66e-04, 0.98 it/s
+  Step 1300/2000: loss=2.9861, ppl=19.81, lr=1.34e-04, 0.98 it/s
+  Step 1400/2000: loss=2.8011, ppl=16.46, lr=1.04e-04, 0.98 it/s
+  Step 1500/2000: loss=2.7857, ppl=16.21, lr=7.50e-05, 0.98 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step1500.pt
+  Step 1600/2000: loss=2.7667, ppl=15.91, lr=4.96e-05, 0.98 it/s
+  Step 1700/2000: loss=2.6667, ppl=14.39, lr=2.86e-05, 0.98 it/s
+  Step 1800/2000: loss=2.6349, ppl=13.94, lr=1.30e-05, 0.98 it/s
+  Step 1900/2000: loss=2.6645, ppl=14.36, lr=3.28e-06, 0.98 it/s
+  Step 2000/2000: loss=2.5963, ppl=13.41, lr=0.00e+00, 0.98 it/s
+
+Baseline done: loss=2.5963, ppl=13.41 (2041s, 34.0m)
+Final checkpoint: /home/user/new-ai/checkpoints_10M/baseline_final.pt

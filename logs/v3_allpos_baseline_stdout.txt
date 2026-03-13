@@ -1,3 +1,45 @@
+Tokenizer: vocab=8192
+Loading train from /home/user/new-ai/data/large_train_tokenized.pt...
+  train: 248,425 samples
+Loading holdout from /home/user/new-ai/data/large_holdout_tokenized.pt...
+  holdout: 12,974 samples
+/home/user/new-ai/neurogenesis_v2/baseline/transformer.py:28: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
+Baseline 10M model: 10,646,528 params
+d_model=512, n_heads=16, n_layers=4, d_ffn=512
+batch_size=8, gradient_accumulation=1
+effective_batch_size=8
+
+======================================================================
+BASELINE 10M TRAINING: 2000 steps (from step 0)
+Training samples: 248,425
+======================================================================
+  Step 100/2000: loss=6.7668, ppl=868.51, lr=6.00e-05, 0.97 it/s
+  Step 200/2000: loss=4.9612, ppl=142.77, lr=1.20e-04, 0.98 it/s
+  Step 300/2000: loss=4.5175, ppl=91.61, lr=1.80e-04, 0.97 it/s
+  Step 400/2000: loss=4.4945, ppl=89.52, lr=2.40e-04, 0.97 it/s
+  Step 500/2000: loss=3.9899, ppl=54.05, lr=3.00e-04, 0.97 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step500.pt
+  Step 600/2000: loss=3.8896, ppl=48.89, lr=2.97e-04, 0.98 it/s
+  Step 700/2000: loss=3.7278, ppl=41.59, lr=2.87e-04, 0.98 it/s
+  Step 800/2000: loss=3.6589, ppl=38.82, lr=2.71e-04, 0.98 it/s
+  Step 900/2000: loss=3.4660, ppl=32.01, lr=2.50e-04, 0.98 it/s
+  Step 1000/2000: loss=3.3690, ppl=29.05, lr=2.25e-04, 0.98 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step1000.pt
+  Step 1100/2000: loss=3.1310, ppl=22.90, lr=1.96e-04, 0.98 it/s
+  Step 1200/2000: loss=3.0675, ppl=21.49, lr=1.66e-04, 0.98 it/s
+  Step 1300/2000: loss=2.9861, ppl=19.81, lr=1.34e-04, 0.98 it/s
+  Step 1400/2000: loss=2.8011, ppl=16.46, lr=1.04e-04, 0.98 it/s
+  Step 1500/2000: loss=2.7857, ppl=16.21, lr=7.50e-05, 0.98 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/baseline_step1500.pt
+  Step 1600/2000: loss=2.7667, ppl=15.91, lr=4.96e-05, 0.98 it/s
+  Step 1700/2000: loss=2.6667, ppl=14.39, lr=2.86e-05, 0.98 it/s
+  Step 1800/2000: loss=2.6349, ppl=13.94, lr=1.30e-05, 0.98 it/s
+  Step 1900/2000: loss=2.6645, ppl=14.36, lr=3.28e-06, 0.98 it/s
+  Step 2000/2000: loss=2.5963, ppl=13.41, lr=0.00e+00, 0.98 it/s
+
+Baseline done: loss=2.5963, ppl=13.41 (2041s, 34.0m)
+Final checkpoint: /home/user/new-ai/checkpoints_10M/baseline_final.pt
 
 ======================================================================
 EVALUATION: baseline (10M scale)
@@ -2444,3 +2486,11 @@ GENERATION SAMPLES — Baseline
 INFERENCE SPEED TEST — Baseline
 ======================================================================
   Generated 168 tokens in 0.59s (285.7 tokens/sec)
+
+======================================================================
+SUMMARY: baseline (10M)
+======================================================================
+  Train PPL:   12.48
+  Holdout PPL: 111.16
+  Gen Gap:     +98.68
+======================================================================
