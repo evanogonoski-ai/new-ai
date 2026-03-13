@@ -3,7 +3,10 @@ checkpoints/
 checkpoints_v2/
 checkpoints_baseline/
 checkpoints_v2.1/
-checkpoints_10M/
+# checkpoints_10M/ — tracked for VPS persistence
+# Only track final checkpoints (intermediate are too numerous)
+checkpoints_10M/baseline_step*.pt
+checkpoints_10M/resonance_step*.pt
 
 # Large binary files
 data/*.pt
