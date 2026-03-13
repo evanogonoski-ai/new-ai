@@ -111,11 +111,9 @@ class ResonanceModel(nn.Module):
             prev_state = state
             state = new_state
 
-        # Final norm and projection
+        # Final norm and projection — all positions for causal LM
         normed = self.final_norm(state)
-        # Predict from last token position
-        last_hidden = normed[:, -1, :]  # (B, d_model)
-        logits = F.linear(last_hidden, self.embedding.weight, self.output_bias)
+        logits = F.linear(normed, self.embedding.weight, self.output_bias)  # (B, S, V)
 
         ponder_cost = num_iterations / max_iterations
 
@@ -130,14 +128,14 @@ class ResonanceModel(nn.Module):
         if return_all_states:
             result['all_states'] = all_states
 
-        # Multi-timescale predictions
+        # Multi-timescale predictions — all positions
         if self.training and len(all_states) > self.config.surface_state_index:
-            surface_hidden = all_states[self.config.surface_state_index][:, -1, :]
+            surface_hidden = all_states[self.config.surface_state_index]
             result['surface_logits'] = self.surface_head(surface_hidden)
 
         if (self.training
                 and len(all_states) > self.config.semantic_state_index):
-            semantic_hidden = all_states[self.config.semantic_state_index][:, -1, :]
+            semantic_hidden = all_states[self.config.semantic_state_index]
             result['semantic_logits'] = self.semantic_head(semantic_hidden)
 
         return result

@@ -45,7 +45,7 @@ class BaselineTransformer(nn.Module):
         x = self.transformer(x, mask=causal_mask, is_causal=True)
         x = self.final_norm(x)
 
-        logits = self.output_proj(x[:, -1, :])  # predict from last position
+        logits = self.output_proj(x)  # (B, S, vocab_size) — all positions
         return logits
 
     def count_parameters(self) -> int:

@@ -209,9 +209,9 @@ def train_resonance(config, dataset, num_steps, device, checkpoint_interval,
             target_ids = target_ids.to(device).clamp(0, config.vocab_size - 1)
 
             output = model(input_ids, max_iterations=config.max_iterations, use_momentum=True)
-            logits = output['logits']
+            logits = output['logits']  # (B, S, V)
 
-            ce_loss = F.cross_entropy(logits, target_ids[:, -1])
+            ce_loss = F.cross_entropy(logits.view(-1, config.vocab_size), target_ids.view(-1))
             ponder_loss = output['ponder_cost'] * 0.01 if output['ponder_cost'] is not None else 0
             total_loss = ce_loss + ponder_loss
 
@@ -324,8 +324,8 @@ def train_baseline(num_steps, dataset, device, checkpoint_interval, logger,
             input_ids = input_ids.to(device).clamp(0, cfg['vocab_size'] - 1)
             target_ids = target_ids.to(device).clamp(0, cfg['vocab_size'] - 1)
 
-            logits = model(input_ids)
-            loss = F.cross_entropy(logits, target_ids[:, -1])
+            logits = model(input_ids)  # (B, S, V)
+            loss = F.cross_entropy(logits.view(-1, cfg['vocab_size']), target_ids.view(-1))
 
             scaled_loss = loss / gradient_accumulation
             scaled_loss.backward()
@@ -393,17 +393,17 @@ def eval_model(model, dataset, config_or_dict, label, device='cpu',
 
             if is_resonance:
                 output = model(input_ids, max_iterations=8, use_momentum=True)
-                logits = output['logits']
+                logits = output['logits']  # (B, S, V)
                 last_gates = output['all_gates'][-1] if output['all_gates'] else None
                 gate_mean = last_gates.mean().item() if last_gates is not None else 0
                 iters = output['num_iterations']
                 if last_gates is not None:
                     all_gate_values.append(last_gates.detach())
             else:
-                logits = model(input_ids)
+                logits = model(input_ids)  # (B, S, V)
                 gate_mean = iters = None
 
-            loss = F.cross_entropy(logits, target_ids[:, -1])
+            loss = F.cross_entropy(logits.view(-1, vocab_size), target_ids.view(-1))
             total_loss += loss.item()
             total_count += 1
 
@@ -476,18 +476,18 @@ def eval_holdout_by_author(model, holdout_jsonl, tokenizer, config_or_dict, labe
                 ids = ids[:max_seq_len + 1]
 
                 input_ids = torch.tensor([ids[:-1]], dtype=torch.long, device=device)
-                target_ids = torch.tensor([ids[-1]], dtype=torch.long, device=device)
+                target_ids = torch.tensor([ids[1:]], dtype=torch.long, device=device)
 
                 if is_resonance:
                     output = model(input_ids, max_iterations=8, use_momentum=True)
-                    logits = output['logits']
+                    logits = output['logits']  # (1, S, V)
                     if output['all_gates']:
                         author_gates.append(output['all_gates'][-1].mean().item())
                     author_iters.append(output['num_iterations'])
                 else:
-                    logits = model(input_ids)
+                    logits = model(input_ids)  # (1, S, V)
 
-                loss = F.cross_entropy(logits, target_ids)
+                loss = F.cross_entropy(logits.view(-1, vocab_size), target_ids.view(-1))
                 author_losses.append(loss.item())
 
             if not author_losses:
@@ -536,9 +536,9 @@ def generate_text(model, tokenizer, prompt, max_new_tokens=100, temperature=0.8,
 
             if is_resonance:
                 output = model(input_ids, max_iterations=8)
-                logits = output['logits'].squeeze(0)
+                logits = output['logits'][:, -1, :].squeeze(0)  # last position
             else:
-                logits = model(input_ids).squeeze(0)
+                logits = model(input_ids)[:, -1, :].squeeze(0)  # last position
 
             if temperature > 0:
                 logits = logits / temperature
@@ -703,11 +703,11 @@ def main():
     eval_logger.log(f"EVALUATION: {args.model} (10M scale)")
     eval_logger.log(f"{'='*70}")
 
-    # Eval on train data (sample 5000 batches = 40K examples for speed)
+    # Eval on train data (sample 500 batches for speed)
     res_train = eval_model(
         model, train_dataset, config, f"{args.model} on TRAIN (sampled)",
         args.device, is_resonance=is_resonance, logger=eval_logger,
-        max_batches=5000
+        max_batches=500
     )
 
     # Eval on holdout data (full)
