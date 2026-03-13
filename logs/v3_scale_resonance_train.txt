@@ -1,0 +1,39 @@
+Tokenizer: vocab=8192
+Resonance 10M model: 17,841,666 total, 17,841,666 active params
+V3-A config: gate_min=0.2, gate_max=0.8
+d_model=512, n_heads=16, d_head=32
+d_ffn_start=2048, d_ffn_max=4096
+max_seq_len=256, max_iterations=8
+batch_size=8, gradient_accumulation=1
+effective_batch_size=8
+
+======================================================================
+RESONANCE 10M TRAINING: 2000 steps (from step 0)
+Training samples: 248,425
+======================================================================
+  Step 100/2000: loss=5.2281, ppl=186.44, iters=8, gates=0.322±0.018, alive=2048, lr=6.00e-05, 0.39 it/s
+  Step 200/2000: loss=4.2267, ppl=68.49, iters=8, gates=0.385±0.053, alive=2048, lr=1.20e-04, 0.40 it/s
+  Step 300/2000: loss=3.4801, ppl=32.46, iters=8, gates=0.455±0.068, alive=2048, lr=1.80e-04, 0.39 it/s
+  Step 400/2000: loss=2.7116, ppl=15.05, iters=8, gates=0.525±0.075, alive=2048, lr=2.40e-04, 0.40 it/s
+  Step 500/2000: loss=2.4530, ppl=11.62, iters=8, gates=0.498±0.055, alive=2048, lr=3.00e-04, 0.40 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/resonance_step500.pt
+  Step 600/2000: loss=1.8557, ppl=6.40, iters=8, gates=0.545±0.064, alive=2048, lr=2.97e-04, 0.40 it/s
+  Step 700/2000: loss=1.5539, ppl=4.73, iters=8, gates=0.582±0.092, alive=2048, lr=2.87e-04, 0.40 it/s
+  Step 800/2000: loss=1.1741, ppl=3.24, iters=8, gates=0.587±0.091, alive=2048, lr=2.71e-04, 0.40 it/s
+  Step 900/2000: loss=0.9988, ppl=2.71, iters=8, gates=0.559±0.075, alive=2048, lr=2.50e-04, 0.40 it/s
+  Step 1000/2000: loss=0.8403, ppl=2.32, iters=8, gates=0.562±0.086, alive=2048, lr=2.25e-04, 0.40 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/resonance_step1000.pt
+  Step 1100/2000: loss=0.9590, ppl=2.61, iters=8, gates=0.555±0.082, alive=2048, lr=1.96e-04, 0.40 it/s
+  Step 1200/2000: loss=0.8351, ppl=2.31, iters=8, gates=0.556±0.084, alive=2048, lr=1.66e-04, 0.40 it/s
+  Step 1300/2000: loss=0.8337, ppl=2.30, iters=8, gates=0.564±0.092, alive=2048, lr=1.34e-04, 0.40 it/s
+  Step 1400/2000: loss=0.8174, ppl=2.26, iters=8, gates=0.532±0.063, alive=2048, lr=1.04e-04, 0.40 it/s
+  Step 1500/2000: loss=0.7162, ppl=2.05, iters=8, gates=0.578±0.088, alive=2048, lr=7.50e-05, 0.40 it/s
+  Checkpoint saved: /home/user/new-ai/checkpoints_10M/resonance_step1500.pt
+  Step 1600/2000: loss=0.9015, ppl=2.46, iters=8, gates=0.567±0.088, alive=2048, lr=4.96e-05, 0.40 it/s
+  Step 1700/2000: loss=0.8107, ppl=2.25, iters=8, gates=0.575±0.101, alive=2048, lr=2.86e-05, 0.41 it/s
+  Step 1800/2000: loss=0.8733, ppl=2.39, iters=8, gates=0.568±0.090, alive=2048, lr=1.30e-05, 0.41 it/s
+  Step 1900/2000: loss=0.7387, ppl=2.09, iters=8, gates=0.575±0.097, alive=2048, lr=3.28e-06, 0.41 it/s
+  Step 2000/2000: loss=0.7711, ppl=2.16, iters=8, gates=0.583±0.098, alive=2048, lr=0.00e+00, 0.41 it/s
+
+Resonance done: loss=0.7711, ppl=2.16 (4921s, 82.0m)
+Final checkpoint: /home/user/new-ai/checkpoints_10M/resonance_final.pt
