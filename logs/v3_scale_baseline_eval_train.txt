@@ -1,0 +1,4 @@
+Tokenizer: vocab=8192
+
+--- Loading from checkpoint: checkpoints_10M/baseline_final.pt ---
+Loaded baseline from checkpoints_10M/baseline_final.pt

@@ -1,0 +1,18 @@
+Tokenizer: vocab=8192
+Loading train from /home/user/new-ai/data/large_train_tokenized.pt...
+  train: 248,425 samples
+Loading holdout from /home/user/new-ai/data/large_holdout_tokenized.pt...
+  holdout: 12,974 samples
+
+--- Loading from checkpoint: checkpoints_10M/baseline_final.pt ---
+/home/user/new-ai/neurogenesis_v2/baseline/transformer.py:28: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
+Loaded baseline from checkpoints_10M/baseline_final.pt
+
+======================================================================
+EVALUATION: baseline (10M scale)
+======================================================================
+
+  baseline on TRAIN (sampled): loss=0.0277, ppl=1.03 (5000 batches)
+    synthetic   : loss=0.0299, ppl=1.03
+    wikipedia   : loss=0.0173, ppl=1.02
