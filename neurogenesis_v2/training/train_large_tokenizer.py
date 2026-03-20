@@ -24,6 +24,7 @@ RAW_TEXT_DIRS = [
     'data/raw_texts/additional_synthetic',
     'data/raw_texts/quran',
     'data/raw_texts/wikipedia_synthetic',
+    'data/raw_texts/wikitext103',
 ]
 
 # Existing JSONL corpora to also include
