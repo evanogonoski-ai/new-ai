@@ -7,6 +7,7 @@ checkpoints_v2.1/
 # Only track final checkpoints (intermediate are too numerous)
 checkpoints_10M/baseline_step*.pt
 checkpoints_10M/resonance_step*.pt
+checkpoints_fair/
 
 # Large binary files
 data/*.pt

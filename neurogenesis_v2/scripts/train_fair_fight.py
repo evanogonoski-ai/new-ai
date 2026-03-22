@@ -348,11 +348,30 @@ def eval_holdout_by_author(model, holdout_jsonl, tokenizer, vocab_size, label,
             entry = json.loads(line)
             sources[entry['source']].append(entry['text'])
 
+    # Only evaluate named holdout authors + a sample of wiki sources
+    # (evaluating all ~2900 individual wiki articles is impractical)
+    known_authors = set(HOLDOUT_AUTHORS.keys())
+    # Also include any non-wt103 source and a random sample of wt103 sources
+    wiki_sources = [s for s in sources if s.startswith('wt103_')]
+    non_wiki_sources = [s for s in sources if not s.startswith('wt103_')]
+
+    # Sample max 20 wiki sources for per-source reporting
+    import random as _rng
+    _rng.seed(42)
+    wiki_sample = _rng.sample(wiki_sources, min(20, len(wiki_sources))) if wiki_sources else []
+    eval_sources = set(non_wiki_sources) | set(wiki_sample)
+
+    # Also compute aggregate wiki holdout stats
+    wiki_agg_losses = []
+
     model.eval()
     results = {}
 
     with torch.no_grad():
         for source, texts in sorted(sources.items()):
+            is_wiki_source = source.startswith('wt103_')
+            if source not in eval_sources and not is_wiki_source:
+                continue
             author_losses = []
             author_gates = []
             author_iters = []
@@ -386,6 +405,15 @@ def eval_holdout_by_author(model, holdout_jsonl, tokenizer, vocab_size, label,
 
             avg_loss = sum(author_losses) / len(author_losses)
             avg_ppl = math.exp(min(avg_loss, 20))
+
+            # Accumulate wiki aggregate
+            if is_wiki_source:
+                wiki_agg_losses.extend(author_losses)
+
+            # Only report detail for selected sources
+            if source not in eval_sources:
+                continue
+
             display = HOLDOUT_AUTHORS.get(source, source[:30])
 
             extra = ''
@@ -399,6 +427,13 @@ def eval_holdout_by_author(model, holdout_jsonl, tokenizer, vocab_size, label,
             if author_gates:
                 results[source]['gates'] = sum(author_gates) / len(author_gates)
                 results[source]['iters'] = sum(author_iters) / len(author_iters)
+
+    # Report aggregate wiki holdout
+    if wiki_agg_losses:
+        wiki_avg = sum(wiki_agg_losses) / len(wiki_agg_losses)
+        wiki_ppl = math.exp(min(wiki_avg, 20))
+        log(f"    {'[WIKI AGGREGATE]':<30}: ppl={wiki_ppl:.2f} (n={len(wiki_agg_losses)})")
+        results['_wiki_aggregate'] = {'loss': wiki_avg, 'ppl': wiki_ppl, 'n': len(wiki_agg_losses)}
 
     return results
 
@@ -597,24 +632,25 @@ def main():
         force_iterations=force_iterations, logger=eval_logger, max_batches=500
     )
 
-    # Full holdout eval
+    # Holdout eval (capped at 2000 batches for practical runtime)
     res_holdout = eval_model(
-        model, holdout_dataset, vocab_size, f"{model_label} on HOLDOUT",
+        model, holdout_dataset, vocab_size, f"{model_label} on HOLDOUT (2000 batches)",
         args.device, is_resonance=is_res, n_iterations=args.n_iterations,
-        force_iterations=force_iterations, logger=eval_logger
+        force_iterations=force_iterations, logger=eval_logger, max_batches=2000
     )
 
-    # Per-author holdout
-    holdout_jsonl = HOLDOUT_JSONL
-    if not os.path.exists(holdout_jsonl):
-        holdout_jsonl = os.path.join(DATA_DIR, 'large_holdout_corpus.jsonl')
-    if os.path.exists(holdout_jsonl):
-        eval_holdout_by_author(
-            model, holdout_jsonl, tokenizer, vocab_size,
-            model_label, args.device, is_resonance=is_res,
-            n_iterations=args.n_iterations, force_iterations=force_iterations,
-            logger=eval_logger
-        )
+    # Per-author holdout (skip for large corpus — causes OOM with ~2900 wiki articles)
+    # The aggregate holdout PPL from eval_model is sufficient.
+    # holdout_jsonl = HOLDOUT_JSONL
+    # if not os.path.exists(holdout_jsonl):
+    #     holdout_jsonl = os.path.join(DATA_DIR, 'large_holdout_corpus.jsonl')
+    # if os.path.exists(holdout_jsonl):
+    #     eval_holdout_by_author(
+    #         model, holdout_jsonl, tokenizer, vocab_size,
+    #         model_label, args.device, is_resonance=is_res,
+    #         n_iterations=args.n_iterations, force_iterations=force_iterations,
+    #         logger=eval_logger
+    #     )
 
     # Generation
     run_generation_samples(

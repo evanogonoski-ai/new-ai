@@ -1,0 +1,17 @@
+Fair Fight Corpus Statistics
+==================================================
+Train entries: 128,084
+Holdout entries: 2,901
+Train tokens (est): ~174.6M
+Holdout tokens (est): ~15.6M
+
+By category:
+  wikipedia      : ~140.7M tokens
+  synthetic      : ~39.7M tokens
+  fiction        : ~7.2M tokens
+  philosophy     : ~1.6M tokens
+  science        : ~0.7M tokens
+  quran          : ~0.4M tokens
+
+Heldout authors: plato, austen, darwin, dostoevsky
+WikiText holdout: 10% of articles

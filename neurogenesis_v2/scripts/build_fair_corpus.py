@@ -23,6 +23,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, ROOT)
 
 RAW_DIR = os.path.join(ROOT, 'data', 'raw_texts')
+CORPUS_RAW_DIR = os.path.join(ROOT, 'corpus', 'raw')
+WIKITEXT_DIR = os.path.join(ROOT, 'corpus', 'wikitext103')
 DATA_DIR = os.path.join(ROOT, 'data')
 TOKENIZER_DIR = os.path.join(ROOT, 'tokenizer')
 
@@ -132,6 +134,71 @@ def load_wikitext103_jsonl(directory):
     return entries
 
 
+def load_wikitext103_from_chunks(directory):
+    """Load WikiText-103 from monolithic chunk files (train_chunk_*.txt).
+
+    Parses article boundaries using ' = Title = ' headers.
+    Returns list of entry dicts, one per article.
+    """
+    import re
+
+    # First check for concatenated file, else concatenate chunks
+    concat_path = os.path.join(directory, 'wikitext103_train.txt')
+    if not os.path.exists(concat_path):
+        chunk_files = sorted(glob.glob(os.path.join(directory, 'train_chunk_*.txt')))
+        if not chunk_files:
+            return []
+        print(f"  Concatenating {len(chunk_files)} chunk files...")
+        with open(concat_path, 'w', encoding='utf-8') as out:
+            for cf in chunk_files:
+                with open(cf, 'r', encoding='utf-8') as inp:
+                    out.write(inp.read())
+
+    print(f"  Reading {concat_path}...")
+    with open(concat_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Ensure content starts with newline for uniform splitting
+    if not content.startswith('\n'):
+        content = '\n' + content
+    # Split on article headers: lines like "= Title =" (no leading space)
+    parts = re.split(r'\n= ([^=\n]+?) =\n', content)
+
+    entries = []
+    # parts[0] = preamble, then alternating title/body pairs
+    for i in range(1, len(parts) - 1, 2):
+        title = parts[i].strip()
+        body = parts[i + 1] if i + 1 < len(parts) else ''
+
+        # Clean sub-section markup (lines like "= = Section = =" or "= = = Sub = = =")
+        body = re.sub(r'^= = = (.+?) = = =\s*$', r'\1.', body, flags=re.MULTILINE)
+        body = re.sub(r'^= = (.+?) = =\s*$', r'\1.', body, flags=re.MULTILINE)
+
+        # Clean WikiText tokenization artifacts
+        body = body.replace(' @-@ ', '-')
+        body = body.replace(' @.@ ', '.')
+        body = body.replace(' @,@ ', ',')
+        body = re.sub(r" (\.|,|;|:|\?|!|'s|'t|'re|'ve|'ll|'d|'m|n't)", r'\1', body)
+
+        # Normalize whitespace
+        lines = [l.strip() for l in body.split('\n') if l.strip()]
+        body = ' '.join(lines)
+
+        if len(body.split()) < 100:
+            continue
+
+        safe_name = re.sub(r'[^a-z0-9_]', '_', title.lower())[:60]
+        entries.append({
+            'text': body,
+            'filename': f'wt103_{safe_name}.txt',
+            'filepath': concat_path,
+            'category': 'wikipedia',
+            'source': f'wt103_{safe_name}',
+        })
+
+    return entries
+
+
 def load_wikitext103_txt(directory):
     """Load WikiText-103 from raw text files."""
     return load_text_files(directory)
@@ -146,10 +213,21 @@ def build_corpus():
     all_entries = []
 
     # 1. WikiText-103
-    wiki_dir = os.path.join(RAW_DIR, 'wikitext103')
+    # Check multiple possible locations
     wiki_entries = []
-    if os.path.exists(wiki_dir):
-        # Check for JSONL files first (preferred)
+    if os.path.exists(WIKITEXT_DIR):
+        # Primary: corpus/wikitext103/ with chunk files
+        chunk_files = glob.glob(os.path.join(WIKITEXT_DIR, 'train_chunk_*.txt'))
+        concat_file = os.path.join(WIKITEXT_DIR, 'wikitext103_train.txt')
+        if chunk_files or os.path.exists(concat_file):
+            wiki_entries = load_wikitext103_from_chunks(WIKITEXT_DIR)
+            print(f"WikiText-103 (chunks): {len(wiki_entries)} articles")
+        else:
+            wiki_entries = load_wikitext103_txt(WIKITEXT_DIR)
+            print(f"WikiText-103 (TXT): {len(wiki_entries)} articles")
+    elif os.path.exists(os.path.join(RAW_DIR, 'wikitext103')):
+        # Fallback: data/raw_texts/wikitext103/
+        wiki_dir = os.path.join(RAW_DIR, 'wikitext103')
         jsonl_files = glob.glob(os.path.join(wiki_dir, '*.jsonl'))
         if jsonl_files:
             wiki_entries = load_wikitext103_jsonl(wiki_dir)
@@ -158,8 +236,8 @@ def build_corpus():
             wiki_entries = load_wikitext103_txt(wiki_dir)
             print(f"WikiText-103 (TXT): {len(wiki_entries)} articles")
     else:
-        print("WARNING: WikiText-103 not found at data/raw_texts/wikitext103/")
-        print("  Place WikiText-103 files there (JSONL or TXT format)")
+        print("WARNING: WikiText-103 not found!")
+        print("  Expected at: corpus/wikitext103/ or data/raw_texts/wikitext103/")
 
     # Split wiki: 90% train, 10% holdout
     if wiki_entries:
@@ -172,20 +250,33 @@ def build_corpus():
     else:
         wiki_train, wiki_holdout = [], []
 
-    # 2. Gutenberg
+    # 2. Gutenberg / Literature
     gutenberg_entries = []
     for d in ['gutenberg', 'gutenberg_expanded']:
         gutenberg_entries.extend(load_text_files(os.path.join(RAW_DIR, d)))
-    print(f"Gutenberg: {len(gutenberg_entries)} files")
+    # Also check corpus/raw/ directories (fiction, philosophy, science)
+    for subdir in ['fiction', 'philosophy', 'science']:
+        corpus_dir = os.path.join(CORPUS_RAW_DIR, subdir)
+        if os.path.isdir(corpus_dir):
+            gutenberg_entries.extend(load_text_files(corpus_dir))
+    print(f"Gutenberg/Literature: {len(gutenberg_entries)} files")
 
     # 3. Synthetic
     synthetic_entries = []
     for d in ['synthetic', 'synthetic_scaled', 'additional_synthetic', 'wikipedia_synthetic']:
         synthetic_entries.extend(load_text_files(os.path.join(RAW_DIR, d)))
+    # Also check corpus/raw/synthetic
+    corpus_syn = os.path.join(CORPUS_RAW_DIR, 'synthetic')
+    if os.path.isdir(corpus_syn):
+        synthetic_entries.extend(load_text_files(corpus_syn))
     print(f"Synthetic: {len(synthetic_entries)} files")
 
     # 4. Religious
     religious_entries = load_text_files(os.path.join(RAW_DIR, 'quran'))
+    # Also check corpus/raw/quran
+    corpus_quran = os.path.join(CORPUS_RAW_DIR, 'quran')
+    if os.path.isdir(corpus_quran):
+        religious_entries.extend(load_text_files(corpus_quran))
     print(f"Religious: {len(religious_entries)} files")
 
     # Wikipedia hand-written (small set)

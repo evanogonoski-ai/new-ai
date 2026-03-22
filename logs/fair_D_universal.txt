@@ -1,0 +1,34 @@
+Tokenizer: vocab=8192
+Train: 1,127,807 samples, Holdout: 124,491
+D_universal: 7,353,858 trainable params (15,742,466 total)
+
+======================================================================
+TRAINING: D_universal — 2000 steps
+Training samples: 1,127,807, batch_size=8
+======================================================================
+  Step 100/2000: loss=7.8979, ppl=2691.59, lr=1.50e-04, 0.94 it/s
+  Step 200/2000: loss=6.8823, ppl=974.91, lr=3.00e-04, 0.94 it/s
+  Step 300/2000: loss=6.3013, ppl=545.28, lr=2.98e-04, 0.94 it/s
+  Step 400/2000: loss=5.9697, ppl=391.40, lr=2.91e-04, 0.94 it/s
+  Step 500/2000: loss=5.7366, ppl=310.00, lr=2.80e-04, 0.94 it/s
+  Checkpoint: /home/user/new-ai/checkpoints_fair/D_universal_step500.pt
+  Step 600/2000: loss=5.5775, ppl=264.40, lr=2.65e-04, 0.94 it/s
+  Step 700/2000: loss=5.4385, ppl=230.09, lr=2.46e-04, 0.94 it/s
+  Step 800/2000: loss=5.3180, ppl=203.97, lr=2.25e-04, 0.94 it/s
+  Step 900/2000: loss=5.2262, ppl=186.09, lr=2.01e-04, 0.94 it/s
+  Step 1000/2000: loss=5.1416, ppl=170.98, lr=1.76e-04, 0.95 it/s
+  Checkpoint: /home/user/new-ai/checkpoints_fair/D_universal_step1000.pt
+  Step 1100/2000: loss=5.0731, ppl=159.67, lr=1.50e-04, 0.94 it/s
+  Step 1200/2000: loss=5.0050, ppl=149.15, lr=1.24e-04, 0.94 it/s
+  Step 1300/2000: loss=4.9458, ppl=140.58, lr=9.87e-05, 0.94 it/s
+  Step 1400/2000: loss=4.8819, ppl=131.88, lr=7.50e-05, 0.94 it/s
+  Step 1500/2000: loss=4.8680, ppl=130.06, lr=5.36e-05, 0.94 it/s
+  Checkpoint: /home/user/new-ai/checkpoints_fair/D_universal_step1500.pt
+  Step 1600/2000: loss=4.7647, ppl=117.30, lr=3.51e-05, 0.94 it/s
+  Step 1700/2000: loss=4.8894, ppl=132.87, lr=2.01e-05, 0.94 it/s
+  Step 1800/2000: loss=4.7858, ppl=119.79, lr=9.05e-06, 0.94 it/s
+  Step 1900/2000: loss=4.8155, ppl=123.40, lr=2.28e-06, 0.94 it/s
+  Step 2000/2000: loss=4.8306, ppl=125.29, lr=0.00e+00, 0.94 it/s
+
+D_universal done: loss=4.8306, ppl=125.29 (2131s, 35.5m)
+Final checkpoint: /home/user/new-ai/checkpoints_fair/D_universal_final.pt
