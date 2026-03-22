@@ -8,6 +8,7 @@ checkpoints_v2.1/
 checkpoints_10M/baseline_step*.pt
 checkpoints_10M/resonance_step*.pt
 checkpoints_fair/
+corpus/wikitext103/wikitext103_train.txt
 
 # Large binary files
 data/*.pt
