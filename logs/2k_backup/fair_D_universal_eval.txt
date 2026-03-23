@@ -1,0 +1,67 @@
+
+======================================================================
+EVALUATION: D_universal
+======================================================================
+
+  D_universal on TRAIN (500 batches): loss=4.8362, ppl=125.99 (500 batches)
+    synthetic   : loss=3.6185, ppl=37.28
+    wikipedia   : loss=4.9875, ppl=146.57
+
+  D_universal on HOLDOUT (2000 batches): loss=5.0641, ppl=158.23 (2000 batches)
+    philosophy  : loss=4.9511, ppl=141.33
+    fiction     : loss=5.0037, ppl=148.96
+    wikipedia   : loss=5.1075, ppl=165.25
+
+  D_universal — Per-Author Holdout:
+    Charles Darwin                : ppl=121.48 (n=2)
+    Dostoevsky (C&P)              : ppl=165.74 (n=1)
+    fyodor_dostoevsky_the_brothers: ppl=223.84 (n=1)
+    Jane Austen                   : ppl=105.36 (n=2)
+    Plato (Apology)               : ppl=112.22 (n=2)
+    Plato (Republic)              : ppl=148.37 (n=2)
+    Plato (Symposium)             : ppl=138.28 (n=2)
+    wt103_2015_united_states_grand: ppl=105.70 (n=1)
+    wt103_american_thermos_bottle_: ppl=139.88 (n=1)
+    wt103_archie_maclaren         : ppl=141.13 (n=1)
+    wt103_basehead                : ppl=229.31 (n=1)
+    wt103_ben_daniels             : ppl=134.07 (n=1)
+    wt103_cadmium                 : ppl=185.67 (n=1)
+    wt103_glue_or_glutinous_substa: ppl=109.95 (n=1)
+    wt103_halo_4___forward_unto_da: ppl=155.83 (n=1)
+    wt103_history_of_decompression: ppl=156.98 (n=1)
+    wt103_jeff_hardy              : ppl=138.41 (n=1)
+    wt103_jimmy_greaves           : ppl=124.83 (n=1)
+    wt103_juniper_networks        : ppl=239.60 (n=1)
+    wt103_my_little_pony___friends: ppl=220.43 (n=1)
+    wt103_przevalski__s_nuthatch  : ppl=217.56 (n=1)
+    wt103_remember_last_night__   : ppl=149.36 (n=1)
+    wt103_ss_fort_stikine         : ppl=76.37 (n=1)
+    wt103_the_basement_tapes      : ppl=125.50 (n=1)
+    wt103_the_proposal___film__   : ppl=163.76 (n=1)
+    wt103_tong_yabghu_qaghan      : ppl=224.78 (n=1)
+    wt103_typhoon_oliwa           : ppl=89.85 (n=1)
+    [WIKI AGGREGATE]              : ppl=144.36 (n=2889)
+
+======================================================================
+GENERATION — D_universal
+======================================================================
+
+  "Once upon a time"
+  →  of the first time in the same time. The last year, he was too far from the same time he had a sailed to the first time his father and he would not his son. I was a sorious, but she was again no no more on the final he could be, on a long-play, he was left for Nevin to leave Hockey of his life. He took the final final team. Randy's return to join the last day, but
+
+  "The philosopher argued that"
+  →  thinkers in Samarkand was during the Renaissance was the most content of knowledge in the field. This essay examines its conceptual conceptual beauty, drawing on principles from Bruges and elsewhere, has been debated with empirical observation and institutionalizedized across the experience of how knowledge was understood. The institutional structures, working during the early stages of the proce
+
+  "In the beginning"
+  →  of the central authority, both the naturalists and engineering. The key insight was a central practice of trade and engineering sophistication. Vivienne established a legal code that was one of the most significant limitations of the most striking challenges. The argument had traveled extensively about the mechanisms to articulate the journey, but but also the first time with your counsel. The es
+
+  "The experiment showed that"
+  →  the most distinctive distinctive distinctive approach was a combination of considerable analysis. Percival, a system whose research opened entirely new ways that were practical needs in a series of military training, while imperfect by which were established in Delhi and materialized the work of botany. The intellectual intellectual traditions of this framework involved involved involved minimal 
+
+  "She walked into the room and"
+  →  then to make it. The following day, the widespreading from the same way, were to get off to the water. Anchild the first ship was replaced by the Hunch was then returned to a ship. It was on a 1 – 0.6 percent of the cotes. The main body was to carry the attack on 3 9.0 percent of its last week. The fleet, Hannel was united. The road's first-semble
+
+======================================================================
+SPEED TEST — D_universal
+======================================================================
+  100 tokens in 1.31s → 76.3 tokens/sec

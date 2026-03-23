@@ -1,0 +1,34 @@
+Tokenizer: vocab=8192
+Train: 1,127,807 samples, Holdout: 124,491
+B_resonance_4i: 7,353,858 trainable params (15,742,466 total)
+
+======================================================================
+TRAINING: B_resonance_4i — 2000 steps
+Training samples: 1,127,807, batch_size=8
+======================================================================
+  Step 100/2000: loss=8.1474, ppl=3454.35, lr=1.50e-04, 0.95 it/s, iters=4, gates=0.357±0.028
+  Step 200/2000: loss=7.0176, ppl=1116.13, lr=3.00e-04, 0.90 it/s, iters=4, gates=0.427±0.082
+  Step 300/2000: loss=6.4237, ppl=616.28, lr=2.98e-04, 0.88 it/s, iters=4, gates=0.425±0.100
+  Step 400/2000: loss=6.0520, ppl=424.96, lr=2.91e-04, 0.85 it/s, iters=4, gates=0.439±0.102
+  Step 500/2000: loss=5.8155, ppl=335.46, lr=2.80e-04, 0.86 it/s, iters=4, gates=0.469±0.098
+  Checkpoint: /home/user/new-ai/checkpoints_fair/B_resonance_4i_step500.pt
+  Step 600/2000: loss=5.6290, ppl=278.38, lr=2.65e-04, 0.85 it/s, iters=4, gates=0.472±0.080
+  Step 700/2000: loss=5.5349, ppl=253.37, lr=2.46e-04, 0.85 it/s, iters=4, gates=0.478±0.073
+  Step 800/2000: loss=5.4096, ppl=223.54, lr=2.25e-04, 0.85 it/s, iters=4, gates=0.487±0.072
+  Step 900/2000: loss=5.3095, ppl=202.24, lr=2.01e-04, 0.85 it/s, iters=4, gates=0.486±0.063
+  Step 1000/2000: loss=5.2674, ppl=193.91, lr=1.76e-04, 0.85 it/s, iters=4, gates=0.490±0.060
+  Checkpoint: /home/user/new-ai/checkpoints_fair/B_resonance_4i_step1000.pt
+  Step 1100/2000: loss=5.2019, ppl=181.62, lr=1.50e-04, 0.85 it/s, iters=4, gates=0.494±0.060
+  Step 1200/2000: loss=5.1572, ppl=173.68, lr=1.24e-04, 0.85 it/s, iters=4, gates=0.502±0.062
+  Step 1300/2000: loss=5.0728, ppl=159.62, lr=9.87e-05, 0.85 it/s, iters=4, gates=0.494±0.057
+  Step 1400/2000: loss=4.9927, ppl=147.33, lr=7.50e-05, 0.84 it/s, iters=4, gates=0.503±0.063
+  Step 1500/2000: loss=4.9533, ppl=141.64, lr=5.36e-05, 0.84 it/s, iters=4, gates=0.486±0.055
+  Checkpoint: /home/user/new-ai/checkpoints_fair/B_resonance_4i_step1500.pt
+  Step 1600/2000: loss=4.9534, ppl=141.65, lr=3.51e-05, 0.84 it/s, iters=4, gates=0.502±0.059
+  Step 1700/2000: loss=4.9715, ppl=144.25, lr=2.01e-05, 0.85 it/s, iters=4, gates=0.509±0.057
+  Step 1800/2000: loss=4.9593, ppl=142.49, lr=9.05e-06, 0.85 it/s, iters=4, gates=0.499±0.059
+  Step 1900/2000: loss=4.9537, ppl=141.70, lr=2.28e-06, 0.86 it/s, iters=4, gates=0.490±0.053
+  Step 2000/2000: loss=4.9428, ppl=140.17, lr=0.00e+00, 0.86 it/s, iters=4, gates=0.503±0.056
+
+B_resonance_4i done: loss=4.9428, ppl=140.17 (2329s, 38.8m)
+Final checkpoint: /home/user/new-ai/checkpoints_fair/B_resonance_4i_final.pt

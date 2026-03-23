@@ -1,0 +1,79 @@
+Tokenizer: vocab=8192
+Train: 1,127,807 samples, Holdout: 124,491
+A_baseline: 16,944,128 trainable params (16,944,128 total)
+
+======================================================================
+TRAINING: A_baseline — 10000 steps
+Training samples: 1,127,807, batch_size=8
+======================================================================
+  Step 100/10000: loss=7.9302, ppl=2779.84, lr=1.50e-04, 0.69 it/s
+  Step 200/10000: loss=7.2854, ppl=1458.85, lr=3.00e-04, 0.69 it/s
+  Step 300/10000: loss=7.2980, ppl=1477.36, lr=3.00e-04, 0.68 it/s
+  Step 400/10000: loss=7.2822, ppl=1454.18, lr=3.00e-04, 0.68 it/s
+  Step 500/10000: loss=7.2702, ppl=1436.79, lr=2.99e-04, 0.68 it/s
+  Step 600/10000: loss=7.2913, ppl=1467.42, lr=2.99e-04, 0.68 it/s
+  Step 700/10000: loss=7.2677, ppl=1433.21, lr=2.98e-04, 0.68 it/s
+  Step 800/10000: loss=7.2805, ppl=1451.65, lr=2.97e-04, 0.68 it/s
+  Step 900/10000: loss=7.2706, ppl=1437.42, lr=2.96e-04, 0.68 it/s
+  Step 1000/10000: loss=7.2739, ppl=1442.16, lr=2.95e-04, 0.68 it/s
+  Checkpoint: /home/user/new-ai/checkpoints_fair/10k/A_baseline_step1000.pt
+  Step 1100/10000: loss=7.2551, ppl=1415.24, lr=2.94e-04, 0.68 it/s
+  Step 1200/10000: loss=7.2540, ppl=1413.72, lr=2.92e-04, 0.68 it/s
+  Step 1300/10000: loss=7.2697, ppl=1436.12, lr=2.91e-04, 0.68 it/s
+  Step 1400/10000: loss=7.2545, ppl=1414.51, lr=2.89e-04, 0.67 it/s
+  Step 1500/10000: loss=7.1833, ppl=1317.29, lr=2.87e-04, 0.68 it/s
+  Step 1600/10000: loss=7.0707, ppl=1176.94, lr=2.85e-04, 0.68 it/s
+  Step 1700/10000: loss=7.0072, ppl=1104.60, lr=2.83e-04, 0.68 it/s
+  Step 1800/10000: loss=6.9391, ppl=1031.87, lr=2.81e-04, 0.68 it/s
+  Step 1900/10000: loss=6.8705, ppl=963.42, lr=2.78e-04, 0.68 it/s
+  Step 2000/10000: loss=6.7551, ppl=858.41, lr=2.76e-04, 0.67 it/s
+  Checkpoint: /home/user/new-ai/checkpoints_fair/10k/A_baseline_step2000.pt
+  Step 2100/10000: loss=6.6641, ppl=783.75, lr=2.73e-04, 0.67 it/s
+  Step 2200/10000: loss=6.6057, ppl=739.30, lr=2.70e-04, 0.67 it/s
+  Step 2300/10000: loss=6.5470, ppl=697.16, lr=2.67e-04, 0.67 it/s
+  Step 2400/10000: loss=6.5425, ppl=694.05, lr=2.64e-04, 0.67 it/s
+  Step 2500/10000: loss=6.5166, ppl=676.29, lr=2.61e-04, 0.67 it/s
+  Step 2600/10000: loss=6.4840, ppl=654.61, lr=2.58e-04, 0.67 it/s
+  Step 2700/10000: loss=6.4449, ppl=629.50, lr=2.54e-04, 0.67 it/s
+  Step 2800/10000: loss=6.4267, ppl=618.12, lr=2.51e-04, 0.67 it/s
+  Step 2900/10000: loss=6.4138, ppl=610.18, lr=2.47e-04, 0.67 it/s
+  Step 3000/10000: loss=6.3892, ppl=595.40, lr=2.44e-04, 0.66 it/s
+  Checkpoint: /home/user/new-ai/checkpoints_fair/10k/A_baseline_step3000.pt
+  Step 3100/10000: loss=6.3725, ppl=585.51, lr=2.40e-04, 0.66 it/s
+  Step 3200/10000: loss=6.3648, ppl=581.04, lr=2.36e-04, 0.66 it/s
+  Step 3300/10000: loss=6.3333, ppl=563.01, lr=2.32e-04, 0.66 it/s
+  Step 3400/10000: loss=6.3355, ppl=564.23, lr=2.28e-04, 0.66 it/s
+  Step 3500/10000: loss=6.3242, ppl=557.90, lr=2.24e-04, 0.66 it/s
+  Step 3600/10000: loss=6.3088, ppl=549.40, lr=2.19e-04, 0.66 it/s
+  Step 3700/10000: loss=6.2803, ppl=533.93, lr=2.15e-04, 0.66 it/s
+  Step 3800/10000: loss=6.2963, ppl=542.55, lr=2.11e-04, 0.66 it/s
+  Step 3900/10000: loss=6.2653, ppl=526.01, lr=2.06e-04, 0.66 it/s
+  Step 4000/10000: loss=6.2625, ppl=524.55, lr=2.02e-04, 0.66 it/s
+  Checkpoint: /home/user/new-ai/checkpoints_fair/10k/A_baseline_step4000.pt
+  Step 4100/10000: loss=6.2673, ppl=527.04, lr=1.97e-04, 0.66 it/s
+  Step 4200/10000: loss=6.2473, ppl=516.62, lr=1.93e-04, 0.66 it/s
+  Step 4300/10000: loss=6.2241, ppl=504.79, lr=1.88e-04, 0.66 it/s
+  Step 4400/10000: loss=6.2352, ppl=510.41, lr=1.83e-04, 0.66 it/s
+  Step 4500/10000: loss=6.2319, ppl=508.75, lr=1.79e-04, 0.66 it/s
+  Step 4600/10000: loss=6.2141, ppl=499.73, lr=1.74e-04, 0.66 it/s
+  Step 4700/10000: loss=6.1808, ppl=483.38, lr=1.69e-04, 0.66 it/s
+  Step 4800/10000: loss=6.2137, ppl=499.56, lr=1.64e-04, 0.66 it/s
+  Step 4900/10000: loss=6.1717, ppl=478.99, lr=1.60e-04, 0.66 it/s
+  Step 5000/10000: loss=6.1550, ppl=471.06, lr=1.55e-04, 0.66 it/s
+  Checkpoint: /home/user/new-ai/checkpoints_fair/10k/A_baseline_step5000.pt
+  Step 5100/10000: loss=6.1453, ppl=466.54, lr=1.50e-04, 0.66 it/s
+  Step 5200/10000: loss=6.1763, ppl=481.21, lr=1.45e-04, 0.66 it/s
+  Step 5300/10000: loss=6.1552, ppl=471.17, lr=1.40e-04, 0.66 it/s
+  Step 5400/10000: loss=6.1343, ppl=461.40, lr=1.36e-04, 0.66 it/s
+  Step 5500/10000: loss=6.1207, ppl=455.20, lr=1.31e-04, 0.66 it/s
+  Step 5600/10000: loss=6.1085, ppl=449.66, lr=1.26e-04, 0.66 it/s
+  Step 5700/10000: loss=6.1219, ppl=455.74, lr=1.21e-04, 0.66 it/s
+  Step 5800/10000: loss=6.0903, ppl=441.57, lr=1.17e-04, 0.65 it/s
+  Step 5900/10000: loss=6.1011, ppl=446.35, lr=1.12e-04, 0.65 it/s
+  Step 6000/10000: loss=6.0880, ppl=440.54, lr=1.07e-04, 0.65 it/s
+  Checkpoint: /home/user/new-ai/checkpoints_fair/10k/A_baseline_step6000.pt
+  Step 6100/10000: loss=6.0522, ppl=425.06, lr=1.03e-04, 0.66 it/s
+  Step 6200/10000: loss=6.0554, ppl=426.42, lr=9.82e-05, 0.66 it/s
+  Step 6300/10000: loss=6.0741, ppl=434.44, lr=9.37e-05, 0.66 it/s
+  Step 6400/10000: loss=6.0757, ppl=435.14, lr=8.93e-05, 0.66 it/s
+  Step 6500/10000: loss=6.0386, ppl=419.31, lr=8.49e-05, 0.66 it/s

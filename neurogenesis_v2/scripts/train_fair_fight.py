@@ -544,8 +544,15 @@ def main():
     parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--eval-only', action='store_true')
     parser.add_argument('--checkpoint', type=str, default=None)
+    parser.add_argument('--log-prefix', type=str, default='fair',
+                        help='Prefix for log files (default: fair)')
+    parser.add_argument('--checkpoint-subdir', type=str, default=None,
+                        help='Subdirectory under checkpoints_fair/ for checkpoints')
     args = parser.parse_args()
 
+    global CHECKPOINT_DIR
+    if args.checkpoint_subdir:
+        CHECKPOINT_DIR = os.path.join(CHECKPOINT_DIR, args.checkpoint_subdir)
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
     os.makedirs(LOG_DIR, exist_ok=True)
 
@@ -563,8 +570,9 @@ def main():
     force_iterations = args.model == 'universal'
 
     # Logger
+    log_prefix = args.log_prefix
     log_suffix = '_eval' if args.eval_only else ''
-    logger = Logger(os.path.join(LOG_DIR, f'fair_{model_label}{log_suffix}.txt'))
+    logger = Logger(os.path.join(LOG_DIR, f'{log_prefix}_{model_label}{log_suffix}.txt'))
 
     # Tokenizer
     tok_path = TOKENIZER_PATH
@@ -619,7 +627,7 @@ def main():
     logger.close()
 
     # ─── EVALUATION ──────────────────────────────────────────────────────
-    eval_logger = Logger(os.path.join(LOG_DIR, f'fair_{model_label}_eval.txt'))
+    eval_logger = Logger(os.path.join(LOG_DIR, f'{log_prefix}_{model_label}_eval.txt'))
 
     eval_logger.log(f"\n{'='*70}")
     eval_logger.log(f"EVALUATION: {model_label}")

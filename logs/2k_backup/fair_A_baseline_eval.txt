@@ -1,0 +1,76 @@
+
+======================================================================
+EVALUATION: A_baseline
+======================================================================
+
+  A_baseline on TRAIN (500 batches): loss=7.1405, ppl=1262.06 (500 batches)
+    synthetic   : loss=7.1880, ppl=1323.40
+    wikipedia   : loss=7.1346, ppl=1254.64
+
+  A_baseline on HOLDOUT (2000 batches): loss=7.0775, ppl=1185.00 (2000 batches)
+    philosophy  : loss=6.8653, ppl=958.45
+    fiction     : loss=7.1254, ppl=1243.20
+    wikipedia   : loss=7.1175, ppl=1233.35
+
+  A_baseline — Per-Author Holdout:
+    Charles Darwin                : ppl=1612.10 (n=2)
+    Dostoevsky (C&P)              : ppl=1366.49 (n=1)
+    fyodor_dostoevsky_the_brothers: ppl=2973.10 (n=1)
+    Jane Austen                   : ppl=1258.89 (n=2)
+    Plato (Apology)               : ppl=1105.48 (n=2)
+    Plato (Republic)              : ppl=1165.23 (n=2)
+    Plato (Symposium)             : ppl=1365.58 (n=2)
+    wt103_2015_united_states_grand: ppl=1259.83 (n=1)
+    wt103_american_thermos_bottle_: ppl=1188.06 (n=1)
+    wt103_archie_maclaren         : ppl=1161.47 (n=1)
+    wt103_basehead                : ppl=1240.62 (n=1)
+    wt103_ben_daniels             : ppl=1368.26 (n=1)
+    wt103_cadmium                 : ppl=1192.63 (n=1)
+    wt103_glue_or_glutinous_substa: ppl=1054.77 (n=1)
+    wt103_halo_4___forward_unto_da: ppl=1121.58 (n=1)
+    wt103_history_of_decompression: ppl=1182.49 (n=1)
+    wt103_jeff_hardy              : ppl=1387.59 (n=1)
+    wt103_jimmy_greaves           : ppl=1203.06 (n=1)
+    wt103_juniper_networks        : ppl=1541.95 (n=1)
+    wt103_my_little_pony___friends: ppl=1387.18 (n=1)
+    wt103_przevalski__s_nuthatch  : ppl=1404.85 (n=1)
+    wt103_remember_last_night__   : ppl=1313.89 (n=1)
+    wt103_ss_fort_stikine         : ppl=1244.80 (n=1)
+    wt103_the_basement_tapes      : ppl=1003.07 (n=1)
+    wt103_the_proposal___film__   : ppl=1297.16 (n=1)
+    wt103_tong_yabghu_qaghan      : ppl=2213.62 (n=1)
+    wt103_typhoon_oliwa           : ppl=1425.81 (n=1)
+    [WIKI AGGREGATE]              : ppl=1260.85 (n=2889)
+
+======================================================================
+GENERATION — A_baseline
+======================================================================
+
+  "Once upon a time"
+  → , the and on., and and The in was. T is to of the the and The
+s,, the, the, the and be in a, and. the the. the, that, the and the San, the
+ were " The. the of the and The the the in a R, ", a ( the the the The. the with as he. a the the its, the and the The for and In. the the the D are a the
+
+  "The philosopher argued that"
+  →  the in. a the it be the the. and-, the of, the. is on The, by to the In,
+ at but the the as The an the
+ the the as.. the and a the had and the as and
+- in that the the the a a the the K is the In the the that The the the the " a the C. the the the
+ in have on on the the the is the the the It. is in first
+
+  "In the beginning"
+  → ,. the one the be of. " and the and, a and were by the T the the the D, the, R the the " the
+ in was the were the the, the the the that and the the the two,, He in for, the the of whichyan for, the I of. the the The B were. the B in a the S the the the that of the the The the by The, A by the the and C. The the the
+
+  "The experiment showed that"
+  → . The in and " were in a H the. a been,.. the " the the D for of a of the The the the an, the of for the the the he as but and, the an the with the the the a a. a, and and for ( the The The to The ( in a the and's a the the the to which, the " the The, a to the the The of the the The a a, the
+ the The, a the
+
+  "She walked into the room and"
+  → . to., that S. had. the the the a the, The the one. the a first were it is in which a the The to a
+ ( was " was, and the the The and by of The the to C. the which of be the the the one. the the the, in the a not a the P. as the was a and haves of the a was the the the the his A in the the D the the the the In. of After
+
+======================================================================
+SPEED TEST — A_baseline
+======================================================================
+  99 tokens in 1.03s → 96.2 tokens/sec

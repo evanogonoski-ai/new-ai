@@ -1,0 +1,59 @@
+
+======================================================================
+EVALUATION: C_resonance_8i
+======================================================================
+
+  C_resonance_8i on TRAIN (500 batches): loss=4.8883, ppl=132.73 (500 batches)
+    Gate variance: 0.000914
+    synthetic   : loss=3.7574, ppl=42.84, gates=0.450, iters=8.0
+    wikipedia   : loss=5.0288, ppl=152.75, gates=0.467, iters=8.0
+
+  C_resonance_8i on HOLDOUT (2000 batches): loss=5.0965, ppl=163.45 (2000 batches)
+    Gate variance: 0.001724
+    philosophy  : loss=4.9811, ppl=145.63, gates=0.479, iters=8.0
+    fiction     : loss=5.0200, ppl=151.41, gates=0.485, iters=8.0
+    wikipedia   : loss=5.1446, ppl=171.50, gates=0.468, iters=8.0
+
+======================================================================
+GENERATION — C_resonance_8i
+======================================================================
+
+  "Once upon a time"
+  →  that day, a few days later, and the second half of the three of the town's second career, he joined the first of the second week for the Tedon Dundal of Keyan, which was the last season, at the match to Bombard in the first time. A weekend was a few months before his next weeks, including the player Toulton's Bucker Eight Eck. On 27 February the next day, he was the second stage
+
+  "The philosopher argued that"
+  → 
+
+"Leilty," Hinderedered the relationship between thinkers in the question. "That is that it could be to be reconciled with a tradition.
+
+"That is why a single case."
+
+"Not empiricism?"
+
+Brandiceice, not be reconciled with a genuine understanding of how knowledge from Kyoto replied with a landscape.
+
+---
+
+"Do the absence, these has a small things about what is. "I will be seen
+
+  "In the beginning"
+  →  of a new role in the history of chemistry, a series of consistency that had significant limitations. In March 1991, the process was a series of considerable cultural traditions during the Baroque period, intellectual fashions had been understood that attracted both new practitioners were careful observers in the years ago. The tension between the episode became the first episode, a series of new 
+
+  "The experiment showed that"
+  → 
+without the two-pired season of the most recent recent visit to a range of day, thoughts,
+
+Avara, as part of the most thoughtful people.
+
+---
+
+The question is compelling and shared the hill in a barrier. First, I hope to the experience.
+Step 5: What is always been a letter from our expression, and I hope it? The argument is beautiful beautiful to the journey of the garden, and what is essential w
+
+  "She walked into the room and"
+  →  the light day. The day were a good room for the two years later, and went on the same. The second season was to be in the first two were first with the second-six. Hourpo was a single in the season, who had been released in the chart. After a result, a long morning were won, the second day, and, and " Federal Next " was the first season and the week of the song, with the album. The song
+
+======================================================================
+SPEED TEST — C_resonance_8i
+======================================================================
+  100 tokens in 2.49s → 40.2 tokens/sec

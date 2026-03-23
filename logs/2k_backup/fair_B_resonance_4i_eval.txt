@@ -1,0 +1,52 @@
+
+======================================================================
+EVALUATION: B_resonance_4i
+======================================================================
+
+  B_resonance_4i on TRAIN (500 batches): loss=4.9698, ppl=144.00 (500 batches)
+    Gate variance: 0.001076
+    synthetic   : loss=3.9104, ppl=49.92, gates=0.481, iters=4.0
+    wikipedia   : loss=5.1014, ppl=164.25, gates=0.501, iters=4.0
+
+  B_resonance_4i on HOLDOUT (2000 batches): loss=5.1634, ppl=174.76 (2000 batches)
+    Gate variance: 0.001690
+    philosophy  : loss=5.0410, ppl=154.63, gates=0.520, iters=4.0
+    fiction     : loss=5.0949, ppl=163.19, gates=0.522, iters=4.0
+    wikipedia   : loss=5.2112, ppl=183.31, gates=0.503, iters=4.0
+
+======================================================================
+GENERATION — B_resonance_4i
+======================================================================
+
+  "Once upon a time"
+  →  of water's work was an attempt to go on to the whole world's house. The show was a few decades of this point to help the difference between the time and for a period. Sidar. In the morning would not not a fertion was not to be a newly, and that would not be set to make it. The idea was known for the time-fireless, but also the more than a bitterfed that the way was one. The most
+
+  "The philosopher argued that"
+  →  compassion compassion is a process of curiosity deepened as a longest process. This was by a framework of disciplines, a significant insight that transformed the essay argues that contemporary discussions tendencies of its origins in the work between rationality and subsequent thinkers who seeks to the preparation of physics. The institutional analysis, from these networks, and reflections, repre
+
+  "In the beginning"
+  →  of the candle had traveled from the evenings, a world that evening, far as the very difficultline of the morning of the morning morning.
+
+---
+
+Conto has been shaped by a little path, the lieutenant sky, a large large large.
+
+---
+
+Withologist
+
+
+The question of honesty weather the nature of the oughal.
+
+Lo had a daily life. The youngest sense has been refined by the night.
+
+  "The experiment showed that"
+  →  lined the subject subject subject from its origins. The systematic systematic systematic investigation shaped by researchers in during the fundamental questions of reform,, and instruments, has been understood as the patronage of new new approach, demonstrated that transformed the practical consequences of the substantive dimensions. The foundational century century, a sophisticated approaches to
+
+  "She walked into the room and"
+  →  in the next month. The first position's point of the first in the day. However, the top of the day of the season in a new season, the United States. The league was a longest over in the season, with a number one year the three-mendary. St.3 has been a pinch of the league would have been named on the end of the Wolverman, with the first first games in the 11th season. M-18 on the
+
+======================================================================
+SPEED TEST — B_resonance_4i
+======================================================================
+  100 tokens in 1.32s → 75.6 tokens/sec
